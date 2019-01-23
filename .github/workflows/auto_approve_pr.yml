@@ -1,0 +1,42 @@
+name: Auto Approve PR on Release
+on:
+  pull_request:
+    branches:
+      - develop
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: octokit/graphql-action@v2.x
+        id: is_member_of_team
+        with:
+          query: |
+            query {
+              organization (login:"jevaka-test-organization") {
+                team(slug:"only-cklewin-and-testuser9891") {
+                  members {
+                    edges {
+                      node {
+                        login
+                      }
+                    }
+                  }
+                }
+              }
+            }
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_READ_ORG_TOKEN }}
+
+      - run: "jq -e '.organization.team.members.edges[] | select(.node.login == \"${{ github.actor }}\") | .node.login' <<< '${{ steps.is_member_of_team.outputs.data }}'"
+
+      - run: "echo 'member of teams: ${{ steps.is_member_of_team.outputs.data }}'"
+
+      # Grr... need to run a GraphQL query to test github.actor belongs to a team...
+      # if not, then stop here.
+
+      - uses: hmarr/auto-approve-action@v2.0.0
+        if: github.head_ref == 'master' || startsWith('meta/', github.head_ref)
+        # if: github.actor == '@only-cklewin-and-testuser9891'
+        with:
+          github-token: "${{ secrets.GITHUB_TOKEN }}"
