@@ -12,7 +12,7 @@ pull_request_rules:
   - name: Merge stub into develop
     conditions:
       - base=develop
-      - head~=^meta/Release:
+      - head~=^meta/Release
     actions:
       merge:
         strict: true
