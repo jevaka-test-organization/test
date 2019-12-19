@@ -3,7 +3,7 @@ pull_request_rules:
     conditions:
       - base=develop
       - head=master
-      - -conflict
+      - '-conflict'
       - 'status-success=ci/circleci: build'
       # - status-success=SonarCloud Code Analysis
       # - status-success=mergefreeze
@@ -15,7 +15,7 @@ pull_request_rules:
       - base=develop
       - head~=^meta/.*alpha$
       - approved
-      - -conflict
+      - '-conflict'
       - author=@only-cklewin-and-testuser9891
     actions:
       merge:
