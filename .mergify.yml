@@ -6,7 +6,6 @@ pull_request_rules:
       - 'status-success=ci/circleci: build'
       # - status-success=SonarCloud Code Analysis
       # - status-success=mergefreeze
-      # - NEED TO ADD CHECK FOR AUTHOR/ACTOR is member of specific team
     actions:
       merge:
         strict: true
@@ -21,6 +20,6 @@ pull_request_rules:
   - name: Delete head branch after merge
     conditions:
       - head!=master
-      - merged=true
+      - merged
     actions:
       delete_head_branch: {}
