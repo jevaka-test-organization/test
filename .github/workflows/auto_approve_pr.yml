@@ -30,8 +30,8 @@ jobs:
 
       - run: "echo 'member of teams: ${{ steps.is_member_of_team.outputs.data }}'"
 
-      - # Grr... need to run a GraphQL query to test github.actor belongs to a team...
-        # if not, then stop here.
+      # Grr... need to run a GraphQL query to test github.actor belongs to a team...
+      # if not, then stop here.
 
       - uses: hmarr/auto-approve-action@v2.0.0
         if: github.head_ref == 'master' || startsWith('meta/', github.head_ref)
