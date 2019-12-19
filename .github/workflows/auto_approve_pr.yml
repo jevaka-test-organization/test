@@ -12,7 +12,7 @@ jobs:
         id: is_member_of_team
         with:
           query: |
-            query {
+            query team(githubActor:String!) {
               organization(login: "jevaka-test-organization") {
                 teams(first: 100, userLogins: [$githubActor]) {
                   totalCount
