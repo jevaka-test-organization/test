@@ -6,6 +6,6 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: hmarr/auto-approve-action@v2.0.0
-        if: github.head_ref == 'master' || startsWith('release/', github.head_ref) && github.base_ref == 'develop'
+        if: (github.head_ref == 'master' || startsWith('meta/', github.head_ref)) && github.base_ref == 'develop'
         with:
           github-token: "${{ secrets.GITHUB_TOKEN }}"
