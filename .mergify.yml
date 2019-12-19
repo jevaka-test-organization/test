@@ -13,7 +13,7 @@ pull_request_rules:
   - name: Merge stub into develop
     conditions:
       - base=develop
-      - head~=^meta/.*alpha$
+      - head~=^meta/[0-9\.]*alpha$
       - -conflict
       - author=@only-cklewin-and-testuser9891
     actions:
@@ -22,7 +22,7 @@ pull_request_rules:
   - name: Delete head branch after merge
     conditions:
       - head!=master
-      - head~=^meta/.*alpha$
+      - head~=^meta/[0-9\.]*alpha$
       - merged
     actions:
       delete_head_branch: {}
