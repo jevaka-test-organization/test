@@ -7,6 +7,7 @@ pull_request_rules:
       - 'status-success=ci/circleci: build'
       # - status-success=SonarCloud Code Analysis
       # - status-success=mergefreeze
+      - author=@only-cklewin-and-testuser9891
     actions:
       merge:
         strict: true
