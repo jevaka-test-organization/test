@@ -12,9 +12,9 @@ jobs:
         id: is_member_of_team
         with:
           query: |
-            query {
+            query teamNames($githubActor) {
               organization(login: "jevaka-test-organization") {
-                teams(first: 100, userLogins: [$GITHUB_ACTOR]) {
+                teams(first: 100, userLogins: [$githubActor]) {
                   totalCount
                   edges {
                     node {
@@ -24,6 +24,7 @@ jobs:
                 }
               }
             }
+          githubActor: ${{ github.actor }}
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
