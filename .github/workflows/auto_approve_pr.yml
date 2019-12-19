@@ -11,19 +11,19 @@ jobs:
       - uses: octokit/graphql-action@v2.x
         id: is_member_of_team
         with:
-          query: |
-            query {
-              organization(login: "jevaka-test-organization") {
-                teams(first: 100, userLogins: ["${{ github.actor }}"]) {
-                  totalCount
+          query { 
+            organization (login:"jevaka-test-organization"){
+              team(slug:"all-developers") {
+                members {
                   edges {
                     node {
-                      name
+                      login
                     }
                   }
                 }
               }
             }
+          }
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
