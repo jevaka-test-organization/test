@@ -12,7 +12,7 @@ pull_request_rules:
   - name: Merge stub into develop
     conditions:
       - base=develop
-      - head~=^release/
+      - head~=^meta/.*alpha$
       - author=@Only-cklewin-and-testuser9891
     actions:
       merge:
@@ -20,6 +20,7 @@ pull_request_rules:
   - name: Delete head branch after merge
     conditions:
       - head!=master
+      - head~=^meta/.*alpha$
       - merged
     actions:
       delete_head_branch: {}
