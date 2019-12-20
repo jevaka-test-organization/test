@@ -29,7 +29,7 @@ jobs:
           GITHUB_TOKEN: ${{ secrets.GITHUB_READ_ORG_TOKEN }}
 
       - id: is_member_of_team
-        run: "jq '.organization.team.members.edges[] | \
+        run: "jq -e '.organization.team.members.edges[] | \
                 select(.node.login == \"${{ github.actor }}\") | \
                 .node.login' <<< '${{ steps.team_member_logins.outputs.data }}'"
 
@@ -40,3 +40,5 @@ jobs:
         if: github.head_ref == 'master' || startsWith('meta/', github.head_ref)
         with:
           github-token: "${{ secrets.GITHUB_TOKEN }}"
+
+      - run: "echo ${{ steps.is_member_of_team.outputs }}"
