@@ -7,9 +7,12 @@ on:
 jobs:
   conditional-approval:
     runs-on: ubuntu-latest
-    if: github.head_ref == 'master' || startsWith(github.head_ref, 'meta/')
+    # the following conditional disables the job from running and reporting (spam)
+    # but generates an email that says the job failed to run
+    # if: github.head_ref == 'master' || startsWith(github.head_ref, 'meta/')
     steps:
       - id: team_member_logins
+        if: github.head_ref == 'master' || startsWith(github.head_ref, 'meta/')
         uses: octokit/graphql-action@v2.x
         with:
           query: |
@@ -30,11 +33,13 @@ jobs:
           GITHUB_TOKEN: ${{ secrets.GITHUB_READ_ORG_TOKEN }}
 
       - id: is_member_of_team
+        if: success()
         run: "jq -e '.organization.team.members.edges[] | \
                 select(.node.login == \"${{ github.actor }}\") | \
                 .node.login' <<< '${{ steps.team_member_logins.outputs.data }}'"
 
       - id: approve_if_master_or_release_stub
+        if: success()
         uses: hmarr/auto-approve-action@v2.0.0
         with:
           github-token: "${{ secrets.GITHUB_TOKEN }}"
