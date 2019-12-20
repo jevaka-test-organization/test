@@ -7,9 +7,9 @@ on:
 jobs:
   auto_approve:
     runs-on: ubuntu-latest
-    if: github.head_ref == 'master' || startsWith(github.head_ref, 'meta/')
     steps:
       - id: team_member_logins
+        if: github.head_ref == 'master' || startsWith(github.head_ref, 'meta/')
         uses: octokit/graphql-action@v2.x
         with:
           query: |
@@ -30,13 +30,14 @@ jobs:
           GITHUB_TOKEN: ${{ secrets.GITHUB_READ_ORG_TOKEN }}
 
       - id: is_member_of_team
+        if: github.head_ref == 'master' || startsWith(github.head_ref, 'meta/')
         run: "jq -e '.organization.team.members.edges[] | \
                 select(.node.login == \"${{ github.actor }}\") | \
                 .node.login' <<< '${{ steps.team_member_logins.outputs.data }}'"
 
       - id: approve_if_master_or_release_stub
-        uses: hmarr/auto-approve-action@v2.0.0
         if: github.head_ref == 'master' || startsWith(github.head_ref, 'meta/')
+        uses: hmarr/auto-approve-action@v2.0.0
         with:
           github-token: "${{ secrets.GITHUB_TOKEN }}"
 
