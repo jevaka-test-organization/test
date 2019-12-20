@@ -5,7 +5,7 @@ on:
       - develop
 
 jobs:
-  conditional approval:
+  conditional-approval:
     runs-on: ubuntu-latest
     steps:
       - id: team_member_logins
