@@ -6,8 +6,8 @@ on:
 
 jobs:
   conditional-approval:
-    if: github.head_ref == 'master' || startsWith(github.head_ref, 'meta/')
     runs-on: ubuntu-latest
+    if: github.head_ref == 'master' || startsWith(github.head_ref, 'meta/')
     steps:
       - id: team_member_logins
         uses: octokit/graphql-action@v2.x
