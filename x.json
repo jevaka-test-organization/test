@@ -1,0 +1,25 @@
+{
+  "organization": {
+    "team": {
+      "members": {
+        "edges": [
+          {
+            "node": {
+              "login": "cklewin"
+            }
+          },
+          {
+            "node": {
+              "login": "testuser9891"
+            }
+          },
+          {
+            "node": {
+              "login": "testuser9893"
+            }
+          }
+        ]
+      }
+    }
+  }
+}

@@ -14,7 +14,7 @@ jobs:
           query: |
             query {
               organization (login:"jevaka-test-organization") {
-                team(slug:"all-developers") {
+                team(slug:"Only cklewin and testuser9891") {
                   members {
                     edges {
                       node {
@@ -27,6 +27,8 @@ jobs:
             }
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_READ_ORG_TOKEN }}
+
+      - run: "jq -e '.organization.team.members.edges[] | select(.node.login == \"github.actor\") | .node.login' <<< ${{ steps.is_member_of_team.outputs.data }}"
 
       - run: "echo 'member of teams: ${{ steps.is_member_of_team.outputs.data }}'"
 
