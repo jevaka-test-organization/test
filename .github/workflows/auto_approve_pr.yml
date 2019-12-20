@@ -1,11 +1,12 @@
-name: Auto Approve PR on Release
+name: Auto Approve PR
 on:
   pull_request:
     branches:
       - develop
 
 jobs:
-  auto_approve:
+  conditional-approval:
+    if: github.head_ref == 'master' || startsWith(github.head_ref, 'meta/')
     runs-on: ubuntu-latest
     steps:
       - id: team_member_logins
@@ -41,4 +42,3 @@ jobs:
         with:
           github-token: "${{ secrets.GITHUB_TOKEN }}"
 
-      - run: "echo ${{ steps.is_member_of_team.outputs }}"
