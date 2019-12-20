@@ -14,7 +14,7 @@ jobs:
           query: |
             query {
               organization (login:"jevaka-test-organization") {
-                team(slug:"Only cklewin and testuser9891") {
+                team(slug:"only-cklewin-and-testuser9891") {
                   members {
                     edges {
                       node {
