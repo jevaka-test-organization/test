@@ -6,6 +6,7 @@ on:
 
 jobs:
   conditional-approval:
+    if: github.head_ref == 'master' || startsWith(github.head_ref, 'meta/')
     runs-on: ubuntu-latest
     steps:
       - id: team_member_logins
