@@ -37,7 +37,7 @@ jobs:
 
       - id: approve_if_master_or_release_stub
         uses: hmarr/auto-approve-action@v2.0.0
-        if: github.head_ref == 'master' || startsWith('meta', github.head_ref)
+        if: github.head_ref == 'master' || startsWith(github.head_ref, 'meta/')
         with:
           github-token: "${{ secrets.GITHUB_TOKEN }}"
 
