@@ -33,3 +33,4 @@ added 21 line by cklewin
 
 Release 0.5.0
 Release 0.6.0
+Release 0.7.0-alpha
