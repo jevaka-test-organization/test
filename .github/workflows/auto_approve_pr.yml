@@ -29,14 +29,16 @@ jobs:
           GITHUB_TOKEN: ${{ secrets.GITHUB_READ_ORG_TOKEN }}
 
       - id: is_member_of_team
-        run: " \
-          jq -e '.organization.team.members.edges[] | \
-          select(.node.login == \"${{ github.actor }}\") | \
-          .node.login' <<< '${{ steps.team_member_logins.outputs.data }}' \
-        "
+        run: "jq -e '.organization.team.members.edges[] | \
+                select(.node.login == \"${{ github.actor }}\") | \
+                .node.login' <<< '${{ steps.team_member_logins.outputs.data }}'"
+
+      - run: "echo ${{ steps.is_member_of_team.outputs }}"
 
       - id: approve_if_master_or_release_stub
         uses: hmarr/auto-approve-action@v2.0.0
         if: github.head_ref == 'master' || startsWith('meta/', github.head_ref)
         with:
           github-token: "${{ secrets.GITHUB_TOKEN }}"
+
+      - run: "echo ${{ steps.is_member_of_team.outputs }}"
