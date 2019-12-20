@@ -31,9 +31,9 @@ jobs:
       - id: is_member_of_team
         run: " \
           jq -e '.organization.team.members.edges[] | \
-          select(.node.login == \"${{ github.actor }}\") | \
-          .node.login' <<< '${{ steps.team_member_logins.outputs.data }}' \
-        "
+            select(.node.login == \"${{ github.actor }}\") | \
+            .node.login' <<< '${{ steps.team_member_logins.outputs.data }}' \
+          2&>1 >> /dev/null"
 
       - id: approve_if_master_or_release_stub
         uses: hmarr/auto-approve-action@v2.0.0
