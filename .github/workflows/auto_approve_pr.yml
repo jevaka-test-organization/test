@@ -21,7 +21,8 @@ jobs:
               }
             }
         env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          GITHUB_TOKEN: ${{ secrets.GITHUB_READ_ORG_TOKEN }}
+      #    GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
       #- id: team_member_logins
       #  if: github.head_ref == 'master' || startsWith(github.head_ref, 'meta/')
