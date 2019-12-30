@@ -11,6 +11,19 @@ jobs:
     # but generates an email that says the job failed to run
     # if: github.head_ref == 'master' || startsWith(github.head_ref, 'meta/')
     steps:
+      - id: delete_branch_protection
+        if: github.head_ref == 'master' || startsWith(github.head_ref, 'meta/')
+        uses: octokit/graphql-action@v2.x
+        with:
+          query: |
+            mutation DeleteBranchProtection {
+              deleteBranchProtectionRule(input: {branchProtectionRuleId: "MDIwOkJyYW5jaFByb3RlY3Rpb25SdWxlMTMzMjM4Njc="}) {
+                clientMutationId
+              }
+            }
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+
       #- id: team_member_logins
       #  if: github.head_ref == 'master' || startsWith(github.head_ref, 'meta/')
       #  uses: octokit/graphql-action@v2.x
