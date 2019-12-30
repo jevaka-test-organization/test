@@ -16,7 +16,7 @@ jobs:
         with:
           query: |
             mutation DeleteBranchProtection {
-              deleteBranchProtectionRule(input: {branchProtectionRuleId: "MDIwOkJyYW5jaFByb3RlY3Rpb25SdWxlMTMzMjM4Njc="}) {
+              deleteBranchProtectionRule(input: {branchProtectionRuleId: "MDIwOkJyYW5jaFByb3RlY3Rpb25SdWxlMTMzMzIyNzM="}) {
                 clientMutationId
               }
             }
