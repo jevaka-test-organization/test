@@ -12,7 +12,6 @@ jobs:
     # if: github.head_ref == 'master' || startsWith(github.head_ref, 'meta/')
     steps:
       - id: delete_branch_protection
-        if: github.head_ref == 'master' || startsWith(github.head_ref, 'meta/')
         uses: octokit/graphql-action@v2.x
         with:
           query: |
