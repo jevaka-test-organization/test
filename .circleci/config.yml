@@ -1,5 +1,20 @@
-version: 2
+version: 2.1
+
+orbs:
+  queue: eddiewebb/queue@1.3.0
+
 jobs:
+  check_sensitive_updates:
+    docker:
+      - image: circleci/python
+
+    steps:
+      - checkout
+
+      - run:
+          name: Sensitive files unchanged
+          command: git diff --exit-code HEAD .github
+
   build:
     docker:
       - image: debian:stretch
@@ -14,3 +29,17 @@ jobs:
       - run:
           name: Print the Current Time
           command: date
+
+workflows:
+  test_workflow:
+    jobs:
+      - queue/block_workflow:
+          only-on-branch: develop
+          dont-quit: true
+
+      - check_sensitive_updates
+
+      - build:
+          requires:
+            - approve_sensitive_updates
+            - queue/block_workflow
