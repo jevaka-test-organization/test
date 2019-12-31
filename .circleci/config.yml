@@ -10,7 +10,7 @@ jobs:
 
       - run:
           name: Sensitive files unchanged
-          command: git diff --exit-code HEAD .github
+          command: git diff --exit-code develop .github
 
   build:
     docker:
