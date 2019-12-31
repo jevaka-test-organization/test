@@ -9,8 +9,7 @@ pull_request_rules:
       # - status-success=mergefreeze
       - author=@only-cklewin-and-testuser9891
     actions:
-      merge:
-        strict: true
+      merge
   - name: Merge stub into develop
     conditions:
       - base=develop
@@ -18,8 +17,7 @@ pull_request_rules:
       - -conflict
       - author=@only-cklewin-and-testuser9891
     actions:
-      merge:
-        strict: true
+      merge
   - name: Delete head branch after merge
     conditions:
       - head!=master
