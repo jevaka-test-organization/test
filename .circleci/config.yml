@@ -14,7 +14,9 @@ jobs:
             git branch
             git status
             git diff develop
-            git diff --exit-code develop:.github HEAD:.github
+            git diff --quiet --exit-code develop:.github HEAD:.github
+            echo $?
+            git diff --quiet --exit-code develop:.github HEAD:.github
 
   build:
     docker:
