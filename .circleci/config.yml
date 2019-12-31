@@ -11,9 +11,16 @@ jobs:
       - run:
           name: Sensitive files unchanged
           command: |
+            git checkout develop
+            git branch
+            git pull
+            git checkout feature/reset-workflow
+            git pull
             git branch
             git status
             git diff develop
+            git diff --quiet --exit-code develop:.github feature/reset-workflow:.github
+            echo $?
             git diff --quiet --exit-code develop:.github HEAD:.github
             echo $?
             git diff --quiet --exit-code develop:.github HEAD:.github
