@@ -12,17 +12,16 @@ pull_request_rules:
       review:
         type: APPROVE
       merge:
-        strict: true
         method: merge
   - name: Approve stub into develop
     conditions:
       - base=develop
       - head~=^meta/([0-9\.])*-alpha$
-      - -conflict
       - author=@only-cklewin-and-testuser9891
     actions:
       review:
         type: APPROVE
+        message: Auto approved by Mergify bot
   - name: Merge stub into develop
     conditions:
       - base=develop
@@ -31,7 +30,6 @@ pull_request_rules:
       - author=@only-cklewin-and-testuser9891
     actions:
       merge:
-        strict: true
         method: merge
   - name: Delete head branch after merge
     conditions:
