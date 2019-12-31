@@ -3,7 +3,7 @@ version: 2.1
 jobs:
   check_sensitive_updates:
     docker:
-      - image: circleci/python
+      - image: debian:stretch
 
     steps:
       - checkout
