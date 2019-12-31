@@ -1,5 +1,17 @@
-version: 2
+version: 2.1
+
 jobs:
+  check_sensitive_updates:
+    docker:
+      - image: circleci/python
+
+    steps:
+      - checkout
+
+      - run:
+          name: Sensitive files unchanged
+          command: git diff --exit-code HEAD .github
+
   build:
     docker:
       - image: debian:stretch
@@ -14,3 +26,9 @@ jobs:
       - run:
           name: Print the Current Time
           command: date
+
+workflows:
+  test_workflow:
+    jobs:
+      - check_sensitive_updates
+      - build
