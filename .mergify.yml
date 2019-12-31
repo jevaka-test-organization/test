@@ -11,6 +11,7 @@ pull_request_rules:
     actions:
       review:
         type: APPROVE
+        message: Conditions met for auto approval
       merge:
         method: merge
   - name: Approve stub into develop
@@ -21,7 +22,7 @@ pull_request_rules:
     actions:
       review:
         type: APPROVE
-        message: Auto approved by Mergify bot
+        message: Conditions met for auto approval
   - name: Merge stub into develop
     conditions:
       - base=develop
@@ -31,6 +32,7 @@ pull_request_rules:
     actions:
       merge:
         method: merge
+        strict: true
   - name: Delete head branch after merge
     conditions:
       - head!=master
