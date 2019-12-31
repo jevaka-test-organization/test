@@ -11,6 +11,15 @@ pull_request_rules:
     actions:
       merge:
         method: merge
+  - name: Assign reviewers
+    conditions:
+      - 'status-success=ci/circleci: build'
+      # - status-success=SonarCloud Code Analysis
+      # - status-success=mergefreeze
+    actions:
+      assign:
+        users:
+          - cklewin
   - name: Satisfy merge conditions
     conditions:
       - base=develop
@@ -22,6 +31,9 @@ pull_request_rules:
       - '#commented-reviews-by=0'
       # - status-success=SonarCloud Code Analysis
       # - status-success=mergefreeze
+    actions:
+      review:
+        type: APPROVE
   - name: Merge stub into develop
     conditions:
       - base=develop
@@ -29,10 +41,6 @@ pull_request_rules:
       - -conflict
       - author=@only-cklewin-and-testuser9891
       - 'status-success=ci/circleci: build'
-      - '#approved-reviews-by>=1'
-      - '#review-requested=0'
-      - '#changes-requested-reviews-by=0'
-      - '#commented-reviews-by=0'
       # - status-success=SonarCloud Code Analysis
       # - status-success=mergefreeze
     actions:
