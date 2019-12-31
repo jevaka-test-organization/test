@@ -11,48 +11,35 @@ jobs:
     # but generates an email that says the job failed to run
     # if: github.head_ref == 'master' || startsWith(github.head_ref, 'meta/')
     steps:
-      - id: delete_branch_protection
+      - id: team_member_logins
+        if: github.head_ref == 'master' || startsWith(github.head_ref, 'meta/')
         uses: octokit/graphql-action@v2.x
         with:
           query: |
-            mutation DeleteBranchProtection {
-              deleteBranchProtectionRule(input: {branchProtectionRuleId: "MDIwOkJyYW5jaFByb3RlY3Rpb25SdWxlMTMzMzIyNzM="}) {
-                clientMutationId
+            query {
+              organization (login:"jevaka-test-organization") {
+                team(slug:"only-cklewin-and-testuser9891") {
+                  members {
+                    edges {
+                      node {
+                        login
+                      }
+                    }
+                  }
+                }
               }
             }
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_READ_ORG_TOKEN }}
-      #    GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
-      #- id: team_member_logins
-      #  if: github.head_ref == 'master' || startsWith(github.head_ref, 'meta/')
-      #  uses: octokit/graphql-action@v2.x
-      #  with:
-      #    query: |
-      #      query {
-      #        organization (login:"jevaka-test-organization") {
-      #          team(slug:"only-cklewin-and-testuser9891") {
-      #            members {
-      #              edges {
-      #                node {
-      #                  login
-      #                }
-      #              }
-      #            }
-      #          }
-      #        }
-      #      }
-      #  env:
-      #    GITHUB_TOKEN: ${{ secrets.GITHUB_READ_ORG_TOKEN }}
-
-      #- id: is_member_of_team
-      #  if: github.head_ref == 'master' || startsWith(github.head_ref, 'meta/')
-      #  run: "jq -e '.organization.team.members.edges[] | \
-      #          select(.node.login == \"${{ github.actor }}\") | \
-      #          .node.login' <<< '${{ steps.team_member_logins.outputs.data }}'"
+      - id: is_member_of_team
+        if: github.head_ref == 'master' || startsWith(github.head_ref, 'meta/')
+        run: "jq -e '.organization.team.members.edges[] | \
+                select(.node.login == \"${{ github.actor }}\") | \
+                .node.login' <<< '${{ steps.team_member_logins.outputs.data }}'"
 
       - id: approve_if_master_or_release_stub
-        # if: github.head_ref == 'master' || startsWith(github.head_ref, 'meta/')
+        if: github.head_ref == 'master' || startsWith(github.head_ref, 'meta/')
         uses: hmarr/auto-approve-action@v2.0.0
         with:
           github-token: "${{ secrets.GITHUB_TOKEN }}"
