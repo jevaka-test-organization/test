@@ -3,7 +3,7 @@ version: 2.1
 jobs:
   check_sensitive_updates:
     docker:
-      - image: circleci/buildpack-deps
+      - image: circleci/python
 
     steps:
       - checkout
