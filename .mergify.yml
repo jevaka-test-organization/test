@@ -14,7 +14,7 @@ pull_request_rules:
       merge:
         strict: true
         method: merge
-  - name: Merge stub into develop
+  - name: Approve stub into develop
     conditions:
       - base=develop
       - head~=^meta/([0-9\.])*-alpha$
@@ -23,6 +23,13 @@ pull_request_rules:
     actions:
       review:
         type: APPROVE
+  - name: Merge stub into develop
+    conditions:
+      - base=develop
+      - head~=^meta/([0-9\.])*-alpha$
+      - -conflict
+      - author=@only-cklewin-and-testuser9891
+    actions:
       merge:
         strict: true
         method: merge
