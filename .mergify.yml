@@ -28,7 +28,6 @@ pull_request_rules:
       - '#approved-reviews-by>=1'
       - '#review-requested=0'
       - '#changes-requested-reviews-by=0'
-      - '#commented-reviews-by=0'
       # - status-success=SonarCloud Code Analysis
       # - status-success=mergefreeze
     actions:
