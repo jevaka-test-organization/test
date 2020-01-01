@@ -10,15 +10,43 @@ pull_request_rules:
       - author=@only-cklewin-and-testuser9891
     actions:
       merge:
-        strict: true
+        method: merge
+  - name: Assign reviewers
+    conditions:
+      - 'status-success=ci/circleci: build'
+      # - status-success=SonarCloud Code Analysis
+      # - status-success=mergefreeze
+    actions:
+      assign:
+        users:
+          - cklewin
+  - name: Satisfy merge conditions
+    conditions:
+      - base=develop
+      - author=@only-cklewin-and-testuser9891
+      - 'status-success=ci/circleci: build'
+      - '#approved-reviews-by>=1'
+      - '#review-requested=0'
+      - '#changes-requested-reviews-by=0'
+      - '#commented-reviews-by=0'
+      # - status-success=SonarCloud Code Analysis
+      # - status-success=mergefreeze
+    actions:
+      review:
+        type: APPROVE
+        message: Merge conditions satisfied
   - name: Merge stub into develop
     conditions:
       - base=develop
       - head~=^meta/([0-9\.])*-alpha$
       - -conflict
       - author=@only-cklewin-and-testuser9891
+      - 'status-success=ci/circleci: build'
+      # - status-success=SonarCloud Code Analysis
+      # - status-success=mergefreeze
     actions:
       merge:
+        method: merge
         strict: true
   - name: Delete head branch after merge
     conditions:
