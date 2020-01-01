@@ -33,7 +33,7 @@ pull_request_rules:
       # - status-success=mergefreeze
     actions:
       review:
-        type: APPROVE
+        type: COMMENT
         message: Merge conditions satisfied
   - name: Merge stub into develop
     conditions:
