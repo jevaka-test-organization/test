@@ -17,7 +17,7 @@ pull_request_rules:
       # - status-success=SonarCloud Code Analysis
       # - status-success=mergefreeze
     actions:
-      assign:
+      request_reviews:
         users:
           - cklewin
   - name: Satisfy merge conditions
