@@ -1,6 +1,5 @@
 # if we set #operations as the global, then we can set individuals as specific folders
 # so #operations will own anything not explicitly set
-/.github/			cklewin@sans.org
 /.circleci/			cklewin@sans.org
 cloudformation_template.yaml	gittest1@jevaka.org
 package.json			gittest1@jevaka.org
