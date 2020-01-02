@@ -1,4 +1,15 @@
 pull_request_rules:
+  - name: Auto-approval
+    conditions:
+      - base=develop
+      - author=@only-cklewin-and-testuser9891
+      - 'status-success=ci/circleci: build'
+      # - status-success=SonarCloud Code Analysis
+      # - status-success=mergefreeze
+    actions:
+      review:
+        type: APPROVE
+        message: Merge conditions satisfied
   - name: Merge master into develop
     conditions:
       - base=develop
