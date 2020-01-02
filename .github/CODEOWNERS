@@ -2,6 +2,7 @@
 # so #operations will own anything not explicitly set
 *	cklewin@sans.org
 /.github/			cklewin@sans.org
+/.circleci/			cklewin@sans.org
 cloudformation_template.yaml	gittest1@jevaka.org
 package.json			gittest1@jevaka.org
 /src/				gittest2@jevaka.org
