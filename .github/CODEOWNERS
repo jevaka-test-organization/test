@@ -3,5 +3,6 @@
 /.github/			cklewin@sans.org
 /.circleci/			cklewin@sans.org
 cloudformation_template.yaml	gittest1@jevaka.org
-package.json			@jevaka-test-organization/only-cklewin-and-testuser9891
+package.json			@jevaka-test-organization/only-cklewin-and-testuser9891 @mergify
+README.md			@jevaka-test-organization/only-cklewin-and-testuser9891 @mergify
 /src/				gittest2@jevaka.org
