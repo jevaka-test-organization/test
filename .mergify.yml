@@ -17,7 +17,7 @@ pull_request_rules:
         message: Auto merge conditions satisfied
       merge:
         method: merge
-  - name: Merge stub into develop
+  - name: Merge alpha release stub into develop
     conditions:
       - base=develop
       - head~=^meta/([0-9\.])*-alpha$
