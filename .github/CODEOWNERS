@@ -3,6 +3,7 @@
 *				@jevaka-test-organization/only-cklewin-and-testuser9891
 /.github/			cklewin@sans.org
 /.circleci/			cklewin@sans.org
+/.mergify.yml			cklewin@sans.org
 cloudformation_template.yaml	gittest1@jevaka.org
 package.json			@jevaka-test-organization/only-cklewin-and-testuser9891
 package2.json			@testuser9891 @cklewin
