@@ -5,6 +5,6 @@
 /.circleci/			cklewin@sans.org
 cloudformation_template.yaml	gittest1@jevaka.org
 package.json			@jevaka-test-organization/only-cklewin-and-testuser9891
-package2.json			@testuser9891
+package2.json			@testuser9891 @cklewin
 README.md			@jevaka-test-organization/only-cklewin-and-testuser9891
 /src/				gittest2@jevaka.org
