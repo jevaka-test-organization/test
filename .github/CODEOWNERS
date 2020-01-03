@@ -6,6 +6,6 @@
 /.mergify.yml			cklewin@sans.org
 cloudformation_template.yaml	gittest1@jevaka.org
 package.json			@jevaka-test-organization/only-cklewin-and-testuser9891
-package2.json			@testuser9891 @cklewin
+package2.json			@testuser9891
 README.md			@jevaka-test-organization/only-cklewin-and-testuser9891
 /src/				gittest2@jevaka.org
