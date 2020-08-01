@@ -1,4 +1,4 @@
-name: Auto Approve PR
+name: Release
 
 on:
   create:
@@ -21,7 +21,7 @@ jobs:
         run: echo "Modify CHANGELOG.md, package.json, package-lock.json"
 
       - name: Create release commit
-        run: echo "Add version files, commit -m 'Release ${{ NEW_RELEASE_VERSION }}'"
+        run: echo "Add version files, commit -m 'Release ${NEW_RELEASE_VERSION}'"
 
       - name: Create pull request to master
         run: echo "Open PR to master"
