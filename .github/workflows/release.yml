@@ -1,7 +1,10 @@
 name: Release
 
 on:
-  create:
+  create
+  pull_request_review:
+    types:
+      - submitted
 
 jobs:
   create:
@@ -25,3 +28,13 @@ jobs:
 
       - name: Create pull request to master
         run: echo "Open PR to master"
+
+
+  merge:
+    if: startsWith(github.event.pull_request.head_ref, 'release/') && github.event.pull_request.merged == true
+    runs-on: ubuntu-latest
+    steps:
+      - name: Output event
+        run: |
+          echo "Confirm review approval"
+          echo "${{ github }}"
