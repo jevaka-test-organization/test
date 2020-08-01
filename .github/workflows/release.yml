@@ -31,7 +31,6 @@ jobs:
 
 
   merge:
-    if: startsWith(github.event.pull_request.head_ref, 'release/')
     runs-on: ubuntu-latest
     steps:
       - name: Output event
