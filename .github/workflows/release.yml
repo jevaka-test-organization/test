@@ -2,7 +2,6 @@ name: Release
 
 on:
   create:
-  push:
   pull_request_review:
     types:
       - submitted
@@ -22,7 +21,7 @@ jobs:
         run: echo "Freeze branches"
 
       - name: Update version files
-        run: echo "Modify CHANGELOG.md, package.json, package-lock.json"
+        run: echo "Modify CHANGELOG.md, package.json, package-lock.json with new release version"
 
       - name: Create release commit
         run: echo "Add version files, commit -m 'Release ${NEW_RELEASE_VERSION}'"
@@ -32,9 +31,45 @@ jobs:
 
 
   merge:
+    if: startsWith(github.pull_request.head.ref, 'release/') &&
+      github.review.state == 'approved') &&
+      !github.pull_request.closed_at &&
+      !github.pull_request.merged_at
     runs-on: ubuntu-latest
     steps:
-      - name: Output event
-        run: |
-          echo "Confirm review approval"
-          echo $(jq '.' $GITHUB_EVENT_PATH)
+      - name: Merge into master
+          echo "Merge into master"
+
+      - name: Publish release
+          echo "Publish release"
+
+      - name: Create pull request from master to develop
+          echo "Open PR from master to develop"
+
+      - name: Auto-approve PR
+          echo "Approve PR from master to develop"
+
+      - name: Merge master into develop
+          echo "Merge master into develop"
+
+      - name: Create meta/stub-version-next_minor_version-alpha
+          echo "Create alpha stub branch (major.minor+1.0)"
+          echo "::set-env name=ALPHA_STUB_VERSION::$(echo 1.3.0-alpha)"
+
+      - name: Update version files
+        run: echo "Modify CHANGELOG.md, package.json, package-lock.json with alpha version"
+
+      - name: Create alphastub commit
+        run: echo "Add version files, commit -m 'Stub version ${ALPHA_STUB_VERSION}'"
+
+      - name: Create pull request from alphastub to develop
+          echo "Open PR from alphastub to develop"
+
+      - name: Auto-approve PR
+          echo "Approve PR from alphastub to develop"
+
+      - name: Merge alphastub into develop
+          echo "Merge master into develop"
+
+      - name: Unfreeze develop and master branches
+          echo "Unfreeze branches"
