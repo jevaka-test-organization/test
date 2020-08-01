@@ -31,19 +31,12 @@ jobs:
 
 
   merge:
-    #if: startsWith(github.pull_request.head.ref, 'release/') &&
-    #  github.review.state == 'approved' &&
-    #  !github.pull_request.closed_at &&
-    #  !github.pull_request.merged_at
+    if: startsWith(github.event.pull_request.head.ref, 'release/') &&
+      github.event.review.state == 'approved' &&
+      !github.event.pull_request.closed_at &&
+      !github.event.pull_request.merged_at
     runs-on: ubuntu-latest
     steps:
-      - name: Output expected vars
-        run: |
-          echo github.event.pull_request.head.ref: ${{ github.event.pull_request.head.ref }}
-          echo github.event.pull_request.closed_at: ${{ github.event.pull_request.closed_at }}
-          echo github.event.pull_request.merged_at: ${{ github.event.pull_request.merged_at }}
-          echo github.event.review.state: ${{ github.event.review.state }}
-
       - name: Merge into master
         run: echo "Merge into master"
 
