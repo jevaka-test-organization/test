@@ -1,0 +1,27 @@
+name: Auto Approve PR
+
+on:
+  create:
+
+jobs:
+  create:
+    if: startWith(github.ref, 'refs/heads/release/')
+    runs-on: ubuntu-latest
+    steps:
+      - name: Validate CHANGELOG.md
+        id: validate_changelog
+        run: |
+          echo "Validate CHANGELOG.md"
+          echo "::set-env name=NEW_RELEASE_VERSION::$(echo 1.2.3)"
+
+      - name: Freeze develop and master branches
+        run: echo "Freeze branches"
+
+      - name: Update version files
+        run: echo "Modify CHANGELOG.md, package.json, package-lock.json"
+
+      - name: Create release commit
+        run: echo "Add version files, commit -m 'Release ${{ NEW_RELEASE_VERSION }}'"
+
+      - name: Create pull request to master
+        run: echo "Open PR to master"
