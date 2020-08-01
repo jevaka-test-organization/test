@@ -38,21 +38,22 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: Merge into master
-          echo "Merge into master"
+        run: echo "Merge into master"
 
       - name: Publish release
-          echo "Publish release"
+        run: echo "Publish release"
 
       - name: Create pull request from master to develop
-          echo "Open PR from master to develop"
+        run: echo "Open PR from master to develop"
 
       - name: Auto-approve PR
-          echo "Approve PR from master to develop"
+        run: echo "Approve PR from master to develop"
 
       - name: Merge master into develop
-          echo "Merge master into develop"
+        run: echo "Merge master into develop"
 
       - name: Create meta/stub-version-next_minor_version-alpha
+        run: |
           echo "Create alpha stub branch (major.minor+1.0)"
           echo "::set-env name=ALPHA_STUB_VERSION::$(echo 1.3.0-alpha)"
 
@@ -63,13 +64,13 @@ jobs:
         run: echo "Add version files, commit -m 'Stub version ${ALPHA_STUB_VERSION}'"
 
       - name: Create pull request from alphastub to develop
-          echo "Open PR from alphastub to develop"
+        run: echo "Open PR from alphastub to develop"
 
       - name: Auto-approve PR
-          echo "Approve PR from alphastub to develop"
+        run: echo "Approve PR from alphastub to develop"
 
       - name: Merge alphastub into develop
-          echo "Merge master into develop"
+        run: echo "Merge master into develop"
 
       - name: Unfreeze develop and master branches
-          echo "Unfreeze branches"
+        run: echo "Unfreeze branches"
