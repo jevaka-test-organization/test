@@ -2,6 +2,7 @@ name: Release
 
 on:
   create:
+  push:
   pull_request_review:
     types:
       - submitted
@@ -36,4 +37,4 @@ jobs:
       - name: Output event
         run: |
           echo "Confirm review approval"
-          echo "${{ github }}"
+          echo ${{ github }} | jq
