@@ -39,10 +39,10 @@ jobs:
     steps:
       - name: Output expected vars
         run: |
-          echo github.pull_request.head.ref: ${{ github.pull_request.head.ref }}
-          echo github.pull_request.closed_at: ${{ github.pull_request.closed_at }}
-          echo github.pull_request.merged_at: ${{ github.pull_request.merged_at }}
-          echo github.review.state: ${{ github.review.state }}
+          echo github.event.pull_request.head.ref: ${{ github.event.pull_request.head.ref }}
+          echo github.event.pull_request.closed_at: ${{ github.event.pull_request.closed_at }}
+          echo github.event.pull_request.merged_at: ${{ github.event.pull_request.merged_at }}
+          echo github.event.review.state: ${{ github.event.review.state }}
 
       - name: Merge into master
         run: echo "Merge into master"
