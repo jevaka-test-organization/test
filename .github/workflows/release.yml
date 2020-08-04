@@ -35,10 +35,10 @@ jobs:
 
   merge:
     if: startsWith(github.event.pull_request.head.ref, 'release/') &&
-      github.event.pull_request.mergeable &&
       !github.event.pull_request.closed_at &&
       !github.event.pull_request.merged
 
+      # github.event.pull_request.mergeable &&
       # github.event.review.state == 'approved' &&
       #
       # rather than state approved, another possibility is to run on pull_request type unlocked
@@ -53,6 +53,9 @@ jobs:
       #
     runs-on: ubuntu-latest
     steps:
+      - name: Output github
+        run: echo ${{ github.event.pull_request }} | jq
+
       - name: Merge into master
         run: echo "Merge into master"
 
