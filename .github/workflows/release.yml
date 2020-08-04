@@ -54,7 +54,11 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: Output github
-        run: echo ${{ github.event.pull_request }} | jq
+        run: |
+          echo review state: ${{ github.event.review.state }}
+          echo closed_at: ${{ github.event.pull_request.closed_at }}
+          echo merged: ${{ github.event.pull_request.merged }}
+          echo mergeable: ${{ github.event.pull_request.mergeable }}
 
       - name: Merge into master
         run: echo "Merge into master"
