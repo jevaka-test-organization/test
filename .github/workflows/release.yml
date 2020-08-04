@@ -2,6 +2,9 @@ name: Release
 
 on:
   create:
+  check_run:
+    types:
+      - completed
   pull_request_review:
     types:
       - submitted
@@ -32,9 +35,22 @@ jobs:
 
   merge:
     if: startsWith(github.event.pull_request.head.ref, 'release/') &&
-      github.event.review.state == 'approved' &&
+      github.event.pull_request.mergeable &&
       !github.event.pull_request.closed_at &&
-      !github.event.pull_request.merged_at
+      !github.event.pull_request.merged
+
+      # github.event.review.state == 'approved' &&
+      #
+      # rather than state approved, another possibility is to run on pull_request type unlocked
+      #	- assuming unlocked is when branch protections are met, ie status checks passed, approved by x reviewers, etc...
+      # If that's the case, then we also won't need closed_at and merged_at
+      # Though, we'll need to test that assumption, if a PR is updated after it's "unlocked", then what?
+      # on: pull_request:
+      #   types:
+      #     - unlocked
+      #
+      # If locked does not mean this, we need to also run when status checks complete and pass
+      #
     runs-on: ubuntu-latest
     steps:
       - name: Merge into master
