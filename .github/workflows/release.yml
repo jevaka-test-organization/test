@@ -2,14 +2,22 @@ name: Release
 
 on:
   create:
-  check_run:
-    types:
-      - completed
+  status:
+    state:
+      - success
   pull_request_review:
     types:
       - submitted
 
 jobs:
+  always-runs:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Output github
+        run: |
+          echo "HERE1"
+          echo "HERE2"
+
   create:
     if: startsWith(github.ref, 'refs/heads/release/')
     runs-on: ubuntu-latest
@@ -32,12 +40,12 @@ jobs:
       - name: Create pull request to master
         run: echo "Open PR to master"
 
-
   merge:
     if: startsWith(github.event.pull_request.head.ref, 'release/') &&
       !github.event.pull_request.closed_at &&
       !github.event.pull_request.merged
 
+      # github.event.pull_request.mergeable_state == 'clean' &&
       # github.event.pull_request.mergeable &&
       # github.event.review.state == 'approved' &&
       #
@@ -55,6 +63,7 @@ jobs:
     steps:
       - name: Output github
         run: |
+          # approved
           echo review state: ${{ github.event.review.state }}
           echo pull request state: ${{ github.event.pull_request.state }}
           echo pull request closed_at: ${{ github.event.pull_request.closed_at }}
