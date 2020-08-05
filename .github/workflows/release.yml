@@ -1,0 +1,109 @@
+name: Release
+
+on:
+  create:
+  status:
+    state:
+      - success
+  pull_request_review:
+    types:
+      - submitted
+
+jobs:
+  always-runs:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Output github
+        run: |
+          echo $(jq '.' $GITHUB_EVENT_PATH)
+
+  create:
+    if: startsWith(github.ref, 'refs/heads/release/')
+    runs-on: ubuntu-latest
+    steps:
+      - name: Validate CHANGELOG.md
+        id: validate_changelog
+        run: |
+          echo "Validate CHANGELOG.md"
+          echo "::set-env name=NEW_RELEASE_VERSION::$(echo 1.2.3)"
+
+      - name: Freeze develop and master branches
+        run: echo "Freeze branches"
+
+      - name: Update version files
+        run: echo "Modify CHANGELOG.md, package.json, package-lock.json with new release version"
+
+      - name: Create release commit
+        run: echo "Add version files, commit -m 'Release ${NEW_RELEASE_VERSION}'"
+
+      - name: Create pull request to master
+        run: echo "Open PR to master"
+
+  merge:
+    if: startsWith(github.event.pull_request.head.ref, 'release/') &&
+      !github.event.pull_request.closed_at &&
+      !github.event.pull_request.merged
+
+      # github.event.pull_request.mergeable_state == 'clean' &&
+      # github.event.pull_request.mergeable &&
+      # github.event.review.state == 'approved' &&
+      #
+      # rather than state approved, another possibility is to run on pull_request type unlocked
+      #	- assuming unlocked is when branch protections are met, ie status checks passed, approved by x reviewers, etc...
+      # If that's the case, then we also won't need closed_at and merged_at
+      # Though, we'll need to test that assumption, if a PR is updated after it's "unlocked", then what?
+      # on: pull_request:
+      #   types:
+      #     - unlocked
+      #
+      # If locked does not mean this, we need to also run when status checks complete and pass
+      #
+    runs-on: ubuntu-latest
+    steps:
+      - name: Output github
+        run: |
+          # approved
+          echo review state: ${{ github.event.review.state }}
+          echo pull request state: ${{ github.event.pull_request.state }}
+          echo pull request closed_at: ${{ github.event.pull_request.closed_at }}
+          echo pull request merged: ${{ github.event.pull_request.merged }}
+          echo pull request mergeable: ${{ github.event.pull_request.mergeable }}
+          echo pull request mergeable state: ${{ github.event.pull_request.mergeable_state }}
+
+      - name: Merge into master
+        run: echo "Merge into master"
+
+      - name: Publish release
+        run: echo "Publish release"
+
+      - name: Create pull request from master to develop
+        run: echo "Open PR from master to develop"
+
+      - name: Auto-approve PR
+        run: echo "Approve PR from master to develop"
+
+      - name: Merge master into develop
+        run: echo "Merge master into develop"
+
+      - name: Create meta/stub-version-next_minor_version-alpha
+        run: |
+          echo "Create alpha stub branch (major.minor+1.0)"
+          echo "::set-env name=ALPHA_STUB_VERSION::$(echo 1.3.0-alpha)"
+
+      - name: Update version files
+        run: echo "Modify CHANGELOG.md, package.json, package-lock.json with alpha version"
+
+      - name: Create alphastub commit
+        run: echo "Add version files, commit -m 'Stub version ${ALPHA_STUB_VERSION}'"
+
+      - name: Create pull request from alphastub to develop
+        run: echo "Open PR from alphastub to develop"
+
+      - name: Auto-approve PR
+        run: echo "Approve PR from alphastub to develop"
+
+      - name: Merge alphastub into develop
+        run: echo "Merge master into develop"
+
+      - name: Unfreeze develop and master branches
+        run: echo "Unfreeze branches"
