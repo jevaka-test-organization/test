@@ -14,5 +14,5 @@ jobs:
       - name: Test output
         run: echo "Test output"
 
-      - name: Test output failure
-        run: exit 1
+      #- name: Test output failure
+      #  run: exit 1
