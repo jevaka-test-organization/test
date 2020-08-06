@@ -75,20 +75,26 @@ jobs:
             exit 1
           fi
 
-          curl \
-              -H "Authorization: token ${{ secrets.GITHUB_TOKEN }}" \
-              -H "Accept: application/vnd.github.luke-cage-preview+json" \
-              ${{ github.event.pull_request.base.repo.url }}/branches/${{ github.event.pull_request.base.ref }}/protection
-
-          REQUIRED_STATUS_CHECKS=$(
-            curl \
-              -H "Authorization: token ${{ secrets.GITHUB_TOKEN }}" \
-              -H "Accept: application/vnd.github.luke-cage-preview+json" \
-              ${{ github.event.pull_request.base.repo.url }}/branches/${{ github.event.pull_request.base.ref }}/protection |
-            jq '.required_status_checks.contexts'
-          )
-
-          echo REQUIRED_STATUS_CHECKS: ${REQUIRED_STATUS_CHECKS}
+          curl -H "Authorization: bearer $(git config github.token)" -X POST -d "
+            {
+              \"query\": \"query { \
+                organization(login: \\\"${{ github.event.pull_request.organization.login }}\\\") { \
+                  repository(name: \\\"${{ github.event.pull_request.base.ref }}\\\") { \
+                    branchProtectionRules(first: 100) { \
+                      nodes { \
+                        requiredStatusCheckContexts \
+                        matchingRefs(first:100) { \
+                          nodes { \
+                            name, \
+                          } \
+                        } \
+                      } \
+                    } \
+                  } \
+                } \
+              }\"
+            }
+            " https://api.github.com/graphql
 
           REQUIRED_STATUS_CHECKS=$(
             curl -H "Authorization: bearer $(git config github.token)" -X POST -d "
