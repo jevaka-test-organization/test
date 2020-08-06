@@ -95,7 +95,7 @@ jobs:
               {
                 \"query\": \"query { \
                   organization(login: \\\"${{ github.event.pull_request.organization.login }}\\\") { \
-                    repository(name: \\\"${{ github.event.pull_request.base.ref }\\\") { \
+                    repository(name: \\\"${{ github.event.pull_request.base.ref }}\\\") { \
                       branchProtectionRules(first: 100) { \
                         nodes { \
                           requiredStatusCheckContexts \
