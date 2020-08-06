@@ -52,7 +52,7 @@ jobs:
       - name: Check if pull request is mergeable
         run: |
           PR_REVIEWS=$(
-            curl \
+            curl -s \
               -H "Authorization: token ${{ secrets.CUSTOM_GITHUB_TOKEN }}" \
               ${{ github.event.pull_request.url }}/reviews |
             jq '.[] |= { login: .user.login, state: .state } | reverse | unique_by( .login )'
@@ -76,7 +76,7 @@ jobs:
           fi
 
           REQUIRED_STATUS_CHECKS=$(
-            curl \
+            curl -s \
               -H "Authorization: token ${{ secrets.CUSTOM_GITHUB_TOKEN }}" \
               -H "Accept: application/vnd.github.luke-cage-preview+json" \
               ${{ github.event.pull_request.base.repo.url }}/branches/${{ github.event.pull_request.base.ref }}/protection |
@@ -84,7 +84,7 @@ jobs:
           )
 
           STATUS_CHECKS=$(
-            curl \
+            curl -s \
               -H "Authorization: token ${{ secrets.CUSTOM_GITHUB_TOKEN }}" \
               -H "Accept: application/vnd.github.antiope-preview+json" \
               ${{ github.event.pull_request.head.repo.url }}/commits/${{ github.event.pull_request.head.sha }}/check-runs |
