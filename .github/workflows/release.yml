@@ -2,7 +2,7 @@ name: Release
 
 on:
   create:
-  check_suite:
+  check_run:
     types:
       - completed
   pull_request_review:
@@ -45,6 +45,10 @@ jobs:
       !github.event.pull_request.merged
     runs-on: ubuntu-latest
     steps:
+
+# github.event.pull_request exists on pull_request_review
+# github.event.check_suite exists on check_suite completed
+
       - name: Check if pull request is mergeable
         run: |
           PR_REVIEWS=$(
