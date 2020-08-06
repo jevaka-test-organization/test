@@ -75,9 +75,15 @@ jobs:
             exit 1
           fi
 
+          curl \
+              -H "Authorization: token ${{ secrets.GITHUB_TOKEN }}" \
+              -H "Accept: application/vnd.github.luke-cage-preview+json" \
+              ${{ github.event.pull_request.base.repo.url }}/branches/${{ github.event.pull_request.base.ref }}/protection
+
           REQUIRED_STATUS_CHECKS=$(
             curl \
               -H "Authorization: token ${{ secrets.GITHUB_TOKEN }}" \
+              -H "Accept: application/vnd.github.luke-cage-preview+json" \
               ${{ github.event.pull_request.base.repo.url }}/branches/${{ github.event.pull_request.base.ref }}/protection |
             jq '.required_status_checks.contexts'
           )
