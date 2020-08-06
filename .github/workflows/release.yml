@@ -67,12 +67,6 @@ jobs:
             exit 1
           fi
 
-          #
-          # curl -H "Authorization: token $(git config github.token)" \
-          # https://api.github.com/repos/jevaka-test-organization/test/branches/master/protection/required_status_checks
-          #
-          # Or we can check all statuses that are not THIS workflow
-          #
           CHECK_RUNS=$(
             curl \
               -H "Authorization: token ${{ GITHUB_TOKEN }}" \
