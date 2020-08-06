@@ -2,7 +2,9 @@ name: Release
 
 on:
   create:
-  status:
+  check_suite:
+    types:
+      - completed
   pull_request_review:
     types:
       - submitted
