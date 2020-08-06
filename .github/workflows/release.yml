@@ -82,7 +82,7 @@ jobs:
             {
               \"query\": \"query { \
                 organization(login: \\\"${{ github.event.organization.login }}\\\") { \
-                  repository(name: \\\"${{ github.event.pull_request.base.ref }}\\\") { \
+                  repository(name: \\\"${{ github.event.pull_request.base.repo.name }}\\\") { \
                     branchProtectionRules(first: 100) { \
                       nodes { \
                         requiredStatusCheckContexts \
@@ -107,7 +107,7 @@ jobs:
               {
                 \"query\": \"query { \
                   organization(login: \\\"${{ github.event.pull_request.organization.login }}\\\") { \
-                    repository(name: \\\"${{ github.event.pull_request.base.ref }}\\\") { \
+                    repository(name: \\\"${{ github.event.pull_request.base.repo.name }}\\\") { \
                       branchProtectionRules(first: 100) { \
                         nodes { \
                           requiredStatusCheckContexts \
@@ -123,7 +123,7 @@ jobs:
                 }\"
               }
               " https://api.github.com/graphql |
-            jq '.data.organization.repository.branchProtectionRules.nodes | .[] | select(.matchingRefs.nodes[].name == "master").requiredStatusCheckContexts'
+            jq '.data.organization.repository.branchProtectionRules.nodes | .[] | select(.matchingRefs.nodes[].name == "${{ github.event.pull_request.base.ref }}").requiredStatusCheckContexts'
           )
 
           echo REQUIRED_STATUS_CHECKS: ${REQUIRED_STATUS_CHECKS}
