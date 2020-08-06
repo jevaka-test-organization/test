@@ -54,27 +54,53 @@ jobs:
             echo ${PR_REVIEWS} |
             jq '[.[] | select( .state == "APPROVED" )] | length'
           )
-          echo "This pull request has ${PR_APPROVALS} approvals"
+          echo "::info ::This pull request has ${PR_APPROVALS} approvals"
 
           PR_CHANGE_REQUESTS=$(
             echo ${PR_REVIEWS} |
             jq '[.[] | select( .state == "CHANGES_REQUESTED" )] | length'
           )
-          echo "This pull request has ${PR_CHANGE_REQUESTS} reviewers requesting changes"
+          echo "::info ::This pull request has ${PR_CHANGE_REQUESTS} reviewers requesting changes"
 
           if [ ${PR_APPROVALS} -lt 1 ] || [ ${PR_CHANGE_REQUESTS} -gt 0 ]; then
-            echo "Exiting with failure"
+            echo "::error ::Failed to meet pull request approval conditions"
             exit 1
           fi
 
-          MERGEABLE_STATE=$(
-            curl ${{ github.event.pull_request.url }} |
-            jq '.mergeable_state'
+          #
+          # curl -H "Authorization: token $(git config github.token)" \
+          # https://api.github.com/repos/jevaka-test-organization/test/branches/master/protection/required_status_checks
+          #
+          # Or we can check all statuses that are not THIS workflow
+          #
+          CHECK_RUNS=$(
+            curl \
+              -H "Authorization: token ${{ GITHUB_TOKEN }}" \
+              -H "Accept: application/vnd.github.antiope-preview+json" \
+              ${{ github.event.pull_request.head.repo.url }}/commits/${{ github.event.pull_request.head.sha }}/check-runs |
+            jq '.check_runs | .[] |= { name: .name, status: .status, conclusion: .conclusion }'
           )
-          echo "The mergeable state of this pull request is ${MERGEABLE_STATE}"
 
-          if [ ${MERGEABLE_STATE} != "clean" ]; then
-            echo "Exiting with failure"
+          CHECK_RUNS_SUCCEEDED=$(
+            echo ${CHECK_RUNS} |
+            jq '[.[] | select( .conclusion == "success" )] | length'
+          )
+          echo "::info ::This pull request has ${CHECK_RUNS_SUCCEEDED} successful checks"
+
+          CHECK_RUNS_INCOMPLETE=$(
+            echo ${CHECK_RUNS} |
+            jq '[.[] | select( .status != "completed" )] | length'
+          )
+          echo "::info ::This pull request has ${CHECK_RUNS_INCOMPLETE} incomplete checks"
+
+          CHECK_RUNS_FAILED=$(
+            echo ${CHECK_RUNS} |
+            jq '[.[] | select( .conclusion == "failure" )] | length'
+          )
+          echo "::info ::This pull request has ${CHECK_RUNS_INCOMPLETE} failed checks"
+
+          if [ ${CHECK_RUNS_INCOMPLETE} -gt 0 ] || [ ${CHECK_RUNS_FAILED} -gt 0 ]; then
+            echo "::error ::Failed to meet check status conditions"
             exit 1
           fi
 
