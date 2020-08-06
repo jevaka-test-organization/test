@@ -1,3 +1,8 @@
+# Release 0.6.0
+
+added 1 line
+
+
 # Release 0.5.0
 
 added 1 line
