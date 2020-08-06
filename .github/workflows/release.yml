@@ -48,7 +48,9 @@ jobs:
       - name: Check if pull request is mergeable
         run: |
           PR_REVIEWS=$(
-            curl ${{ github.event.pull_request.url }}/reviews |
+            curl \
+              -H "Authorization: token ${{ secrets.GITHUB_TOKEN }}" \
+              ${{ github.event.pull_request.url }}/reviews |
             jq '.[] |= { login: .user.login, state: .state } | reverse | unique_by( .login )'
           )
 
@@ -71,7 +73,7 @@ jobs:
 
           CHECK_RUNS=$(
             curl \
-              -H "Authorization: token ${{ GITHUB_TOKEN }}" \
+              -H "Authorization: token ${{ secrets.GITHUB_TOKEN }}" \
               -H "Accept: application/vnd.github.antiope-preview+json" \
               ${{ github.event.pull_request.head.repo.url }}/commits/${{ github.event.pull_request.head.sha }}/check-runs |
             jq '.check_runs | .[] |= { name: .name, status: .status, conclusion: .conclusion }'
