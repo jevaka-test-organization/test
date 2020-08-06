@@ -81,7 +81,7 @@ jobs:
             -d "
             {
               \"query\": \"query { \
-                organization(login: \\\"${{ github.event.pull_request.organization.login }}\\\") { \
+                organization(login: \\\"${{ github.event.organization.login }}\\\") { \
                   repository(name: \\\"${{ github.event.pull_request.base.ref }}\\\") { \
                     branchProtectionRules(first: 100) { \
                       nodes { \
