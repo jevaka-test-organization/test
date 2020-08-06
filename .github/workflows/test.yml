@@ -1,10 +1,7 @@
 name: Test Status Check
 
 on:
-  pull_request:
-    branches:
-      - develop
-      - master
+  push:
 
 jobs:
   ci:
@@ -13,3 +10,6 @@ jobs:
     steps:
       - name: Test output
         run: echo "Test output"
+
+      #- name: Test output failure
+      #  run: exit 1

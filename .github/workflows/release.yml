@@ -2,9 +2,9 @@ name: Release
 
 on:
   create:
-  status:
-    state:
-      - success
+  check_suite:
+    types:
+      - completed
   pull_request_review:
     types:
       - submitted
@@ -43,32 +43,62 @@ jobs:
     if: startsWith(github.event.pull_request.head.ref, 'release/') &&
       !github.event.pull_request.closed_at &&
       !github.event.pull_request.merged
-
-      # github.event.pull_request.mergeable_state == 'clean' &&
-      # github.event.pull_request.mergeable &&
-      # github.event.review.state == 'approved' &&
-      #
-      # rather than state approved, another possibility is to run on pull_request type unlocked
-      #	- assuming unlocked is when branch protections are met, ie status checks passed, approved by x reviewers, etc...
-      # If that's the case, then we also won't need closed_at and merged_at
-      # Though, we'll need to test that assumption, if a PR is updated after it's "unlocked", then what?
-      # on: pull_request:
-      #   types:
-      #     - unlocked
-      #
-      # If locked does not mean this, we need to also run when status checks complete and pass
-      #
     runs-on: ubuntu-latest
     steps:
-      - name: Output github
+      - name: Check if pull request is mergeable
         run: |
-          # approved
-          echo review state: ${{ github.event.review.state }}
-          echo pull request state: ${{ github.event.pull_request.state }}
-          echo pull request closed_at: ${{ github.event.pull_request.closed_at }}
-          echo pull request merged: ${{ github.event.pull_request.merged }}
-          echo pull request mergeable: ${{ github.event.pull_request.mergeable }}
-          echo pull request mergeable state: ${{ github.event.pull_request.mergeable_state }}
+          PR_REVIEWS=$(
+            curl ${{ github.event.pull_request.url }}/reviews |
+            jq '.[] |= { login: .user.login, state: .state } | reverse | unique_by( .login )'
+          )
+
+          PR_APPROVALS=$(
+            echo ${PR_REVIEWS} |
+            jq '[.[] | select( .state == "APPROVED" )] | length'
+          )
+          echo "::info ::This pull request has ${PR_APPROVALS} approvals"
+
+          PR_CHANGE_REQUESTS=$(
+            echo ${PR_REVIEWS} |
+            jq '[.[] | select( .state == "CHANGES_REQUESTED" )] | length'
+          )
+          echo "::info ::This pull request has ${PR_CHANGE_REQUESTS} reviewers requesting changes"
+
+          if [ ${PR_APPROVALS} -lt 1 ] || [ ${PR_CHANGE_REQUESTS} -gt 0 ]; then
+            echo "::error ::Failed to meet pull request approval conditions"
+            exit 1
+          fi
+
+          CHECK_RUNS=$(
+            curl \
+              -H "Authorization: token ${{ GITHUB_TOKEN }}" \
+              -H "Accept: application/vnd.github.antiope-preview+json" \
+              ${{ github.event.pull_request.head.repo.url }}/commits/${{ github.event.pull_request.head.sha }}/check-runs |
+            jq '.check_runs | .[] |= { name: .name, status: .status, conclusion: .conclusion }'
+          )
+
+          CHECK_RUNS_SUCCEEDED=$(
+            echo ${CHECK_RUNS} |
+            jq '[.[] | select( .conclusion == "success" )] | length'
+          )
+          echo "::info ::This pull request has ${CHECK_RUNS_SUCCEEDED} successful checks"
+
+          CHECK_RUNS_INCOMPLETE=$(
+            echo ${CHECK_RUNS} |
+            jq '[.[] | select( .status != "completed" )] | length'
+          )
+          echo "::info ::This pull request has ${CHECK_RUNS_INCOMPLETE} incomplete checks"
+
+          CHECK_RUNS_FAILED=$(
+            echo ${CHECK_RUNS} |
+            jq '[.[] | select( .conclusion == "failure" )] | length'
+          )
+          echo "::info ::This pull request has ${CHECK_RUNS_INCOMPLETE} failed checks"
+
+          if [ ${CHECK_RUNS_INCOMPLETE} -gt 0 ] || [ ${CHECK_RUNS_FAILED} -gt 0 ]; then
+            echo "::error ::Failed to meet check status conditions"
+            exit 1
+          fi
 
       - name: Merge into master
         run: echo "Merge into master"
