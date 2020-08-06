@@ -62,71 +62,26 @@ jobs:
             echo ${PR_REVIEWS} |
             jq '[.[] | select( .state == "APPROVED" )] | length'
           )
-          echo "::info ::This pull request has ${PR_APPROVALS} approvals"
+          echo "This pull request has ${PR_APPROVALS} approvals"
 
           PR_CHANGE_REQUESTS=$(
             echo ${PR_REVIEWS} |
             jq '[.[] | select( .state == "CHANGES_REQUESTED" )] | length'
           )
-          echo "::info ::This pull request has ${PR_CHANGE_REQUESTS} reviewers requesting changes"
+          echo "This pull request has ${PR_CHANGE_REQUESTS} reviewers requesting changes"
 
           if [ ${PR_APPROVALS} -lt 1 ] || [ ${PR_CHANGE_REQUESTS} -gt 0 ]; then
             echo "::error ::Failed to meet pull request approval conditions"
             exit 1
           fi
 
-          curl \
-            -H "Authorization: bearer ${{ secrets.CUSTOM_GITHUB_TOKEN }}" \
-            -X POST \
-            -d "
-            {
-              \"query\": \"query { \
-                organization(login: \\\"${{ github.event.organization.login }}\\\") { \
-                  repository(name: \\\"${{ github.event.pull_request.base.repo.name }}\\\") { \
-                    branchProtectionRules(first: 100) { \
-                      nodes { \
-                        requiredStatusCheckContexts \
-                        matchingRefs(first:100) { \
-                          nodes { \
-                            name, \
-                          } \
-                        } \
-                      } \
-                    } \
-                  } \
-                } \
-              }\"
-            }
-            " https://api.github.com/graphql
-
           REQUIRED_STATUS_CHECKS=$(
             curl \
-              -H "Authorization: bearer ${{ secrets.CUSTOM_GITHUB_TOKEN }}" \
-              -X POST \
-              -d "
-              {
-                \"query\": \"query { \
-                  organization(login: \\\"${{ github.event.organization.login }}\\\") { \
-                    repository(name: \\\"${{ github.event.pull_request.base.repo.name }}\\\") { \
-                      branchProtectionRules(first: 100) { \
-                        nodes { \
-                          requiredStatusCheckContexts \
-                          matchingRefs(first:100) { \
-                            nodes { \
-                              name, \
-                            } \
-                          } \
-                        } \
-                      } \
-                    } \
-                  } \
-                }\"
-              }
-              " https://api.github.com/graphql |
-            jq '.data.organization.repository.branchProtectionRules.nodes | .[] | select(.matchingRefs.nodes[].name == "${{ github.event.pull_request.base.ref }}").requiredStatusCheckContexts'
+              -H "Authorization: token ${{ secrets.CUSTOM_GITHUB_TOKEN }}" \
+              -H "Accept: application/vnd.github.luke-cage-preview+json" \
+              ${{ github.event.pull_request.base.repo.url }}/branches/${{ github.event.pull_request.base.ref }}/protection |
+            jq '.required_status_checks.contexts'
           )
-
-          echo REQUIRED_STATUS_CHECKS: ${REQUIRED_STATUS_CHECKS}
 
           STATUS_CHECKS=$(
             curl \
@@ -136,31 +91,23 @@ jobs:
             jq ".check_runs | [.[] |= { name: .name, status: .status, conclusion: .conclusion } | unique_by( .name )[] | select( .name == (${REQUIRED_STATUS_CHECKS}[]) )]"
           )
 
-          echo STATUS_CHECKS: ${STATUS_CHECKS}
-
           STATUS_CHECKS_SUCCEEDED=$(
             echo ${STATUS_CHECKS} |
             jq '[.[] | select( .conclusion == "success" )] | length'
           )
-          echo "::info ::This pull request has ${STATUS_CHECKS_SUCCEEDED} successful checks"
-
-          echo STATUS_CHECKS_SUCCEEDED: ${STATUS_CHECKS_SUCCEEDED}
+          echo "This pull request has ${STATUS_CHECKS_SUCCEEDED} successful checks"
 
           STATUS_CHECKS_INCOMPLETE=$(
             echo ${STATUS_CHECKS} |
             jq '[.[] | select( .status != "completed" )] | length'
           )
-          echo "::info ::This pull request has ${STATUS_CHECKS_INCOMPLETE} incomplete checks"
-
-          echo STATUS_CHECKS_INCOMPLETE: ${STATUS_CHECKS_INCOMPLETE}
+          echo "This pull request has ${STATUS_CHECKS_INCOMPLETE} incomplete checks"
 
           STATUS_CHECKS_FAILED=$(
             echo ${STATUS_CHECKS} |
             jq '[.[] | select( .conclusion == "failure" )] | length'
           )
-          echo "::info ::This pull request has ${STATUS_CHECKS_FAILED} failed checks"
-
-          echo STATUS_CHECKS_FAILED: ${STATUS_CHECKS_FAILED}
+          echo "This pull request has ${STATUS_CHECKS_FAILED} failed checks"
 
           if [ ${STATUS_CHECKS_INCOMPLETE} -gt 0 ] || [ ${STATUS_CHECKS_FAILED} -gt 0 ]; then
             echo "::error ::Failed to meet check status conditions"
