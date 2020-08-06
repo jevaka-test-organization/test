@@ -75,7 +75,10 @@ jobs:
             exit 1
           fi
 
-          curl -H "Authorization: bearer $(git config github.token)" -X POST -d "
+          curl \
+            -H "Authorization: bearer ${{ secrets.GITHUB_TOKEN }}" \
+            -X POST \
+            -d "
             {
               \"query\": \"query { \
                 organization(login: \\\"${{ github.event.pull_request.organization.login }}\\\") { \
@@ -97,7 +100,10 @@ jobs:
             " https://api.github.com/graphql
 
           REQUIRED_STATUS_CHECKS=$(
-            curl -H "Authorization: bearer $(git config github.token)" -X POST -d "
+            curl \
+              -H "Authorization: bearer ${{ secrets.GITHUB_TOKEN }}" \
+              -X POST \
+              -d "
               {
                 \"query\": \"query { \
                   organization(login: \\\"${{ github.event.pull_request.organization.login }}\\\") { \
