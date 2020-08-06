@@ -87,7 +87,7 @@ jobs:
               -H "Authorization: token ${{ secrets.GITHUB_TOKEN }}" \
               -H "Accept: application/vnd.github.antiope-preview+json" \
               ${{ github.event.pull_request.head.repo.url }}/commits/${{ github.event.pull_request.head.sha }}/check-runs |
-            jq ".[] |= { name: .name, status: .status, conclusion: .conclusion } | unique_by( .name ) | .[] | select( .name == (${REQUIRED_STATUS_CHECKS}[]) )"
+            jq ".check_runs | [.[] |= { name: .name, status: .status, conclusion: .conclusion } | unique_by( .name )[] | select( .name == (${REQUIRED_STATUS_CHECKS}[]) )]"
           )
 
           STATUS_CHECKS_SUCCEEDED=$(
