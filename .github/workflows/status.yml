@@ -1,0 +1,14 @@
+name: Status
+
+on:
+  status:
+    state:
+      - success
+
+jobs:
+  always-runs:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Output github
+        run: |
+          echo $(jq '.' $GITHUB_EVENT_PATH)

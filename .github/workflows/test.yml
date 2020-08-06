@@ -1,0 +1,15 @@
+name: Test Status Check
+
+on:
+  push:
+
+jobs:
+  ci:
+    if: github.head_ref != 'master' && startsWith(github.head_ref, 'meta/') == false
+    runs-on: ubuntu-latest
+    steps:
+      - name: Test output
+        run: echo "Test output"
+
+      #- name: Test output failure
+      #  run: exit 1
