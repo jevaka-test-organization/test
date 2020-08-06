@@ -82,6 +82,8 @@ jobs:
             jq '.required_status_checks.contexts'
           )
 
+          echo REQUIRED_STATUS_CHECKS: ${REQUIRED_STATUS_CHECKS}
+
           STATUS_CHECKS=$(
             curl \
               -H "Authorization: token ${{ secrets.GITHUB_TOKEN }}" \
@@ -90,11 +92,15 @@ jobs:
             jq ".check_runs | [.[] |= { name: .name, status: .status, conclusion: .conclusion } | unique_by( .name )[] | select( .name == (${REQUIRED_STATUS_CHECKS}[]) )]"
           )
 
+          echo STATUS_CHECKS: ${STATUS_CHECKS}
+
           STATUS_CHECKS_SUCCEEDED=$(
             echo ${STATUS_CHECKS} |
             jq '[.[] | select( .conclusion == "success" )] | length'
           )
           echo "::info ::This pull request has ${STATUS_CHECKS_SUCCEEDED} successful checks"
+
+          echo STATUS_CHECKS_SUCCEEDED: ${STATUS_CHECKS_SUCCEEDED}
 
           STATUS_CHECKS_INCOMPLETE=$(
             echo ${STATUS_CHECKS} |
@@ -102,11 +108,15 @@ jobs:
           )
           echo "::info ::This pull request has ${STATUS_CHECKS_INCOMPLETE} incomplete checks"
 
+          echo STATUS_CHECKS_INCOMPLETE: ${STATUS_CHECKS_INCOMPLETE}
+
           STATUS_CHECKS_FAILED=$(
             echo ${STATUS_CHECKS} |
             jq '[.[] | select( .conclusion == "failure" )] | length'
           )
           echo "::info ::This pull request has ${STATUS_CHECKS_FAILED} failed checks"
+
+          echo STATUS_CHECKS_FAILED: ${STATUS_CHECKS_FAILED}
 
           if [ ${STATUS_CHECKS_INCOMPLETE} -gt 0 ] || [ ${STATUS_CHECKS_FAILED} -gt 0 ]; then
             echo "::error ::Failed to meet check status conditions"
