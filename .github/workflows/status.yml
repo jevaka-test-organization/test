@@ -2,8 +2,6 @@ name: Status
 
 on:
   status:
-    state:
-      - success
 
 jobs:
   always-runs:

@@ -53,7 +53,7 @@ jobs:
         run: |
           PR_REVIEWS=$(
             curl \
-              -H "Authorization: token ${{ secrets.GITHUB_TOKEN }}" \
+              -H "Authorization: token ${{ secrets.CUSTOM_GITHUB_TOKEN }}" \
               ${{ github.event.pull_request.url }}/reviews |
             jq '.[] |= { login: .user.login, state: .state } | reverse | unique_by( .login )'
           )
@@ -62,46 +62,54 @@ jobs:
             echo ${PR_REVIEWS} |
             jq '[.[] | select( .state == "APPROVED" )] | length'
           )
-          echo "::info ::This pull request has ${PR_APPROVALS} approvals"
+          echo "This pull request has ${PR_APPROVALS} approvals"
 
           PR_CHANGE_REQUESTS=$(
             echo ${PR_REVIEWS} |
             jq '[.[] | select( .state == "CHANGES_REQUESTED" )] | length'
           )
-          echo "::info ::This pull request has ${PR_CHANGE_REQUESTS} reviewers requesting changes"
+          echo "This pull request has ${PR_CHANGE_REQUESTS} reviewers requesting changes"
 
           if [ ${PR_APPROVALS} -lt 1 ] || [ ${PR_CHANGE_REQUESTS} -gt 0 ]; then
             echo "::error ::Failed to meet pull request approval conditions"
             exit 1
           fi
 
-          CHECK_RUNS=$(
+          REQUIRED_STATUS_CHECKS=$(
             curl \
-              -H "Authorization: token ${{ secrets.GITHUB_TOKEN }}" \
+              -H "Authorization: token ${{ secrets.CUSTOM_GITHUB_TOKEN }}" \
+              -H "Accept: application/vnd.github.luke-cage-preview+json" \
+              ${{ github.event.pull_request.base.repo.url }}/branches/${{ github.event.pull_request.base.ref }}/protection |
+            jq '.required_status_checks.contexts'
+          )
+
+          STATUS_CHECKS=$(
+            curl \
+              -H "Authorization: token ${{ secrets.CUSTOM_GITHUB_TOKEN }}" \
               -H "Accept: application/vnd.github.antiope-preview+json" \
               ${{ github.event.pull_request.head.repo.url }}/commits/${{ github.event.pull_request.head.sha }}/check-runs |
-            jq '.check_runs | .[] |= { name: .name, status: .status, conclusion: .conclusion }'
+            jq ".check_runs | [.[] |= { name: .name, status: .status, conclusion: .conclusion } | unique_by( .name )[] | select( .name == (${REQUIRED_STATUS_CHECKS}[]) )]"
           )
 
-          CHECK_RUNS_SUCCEEDED=$(
-            echo ${CHECK_RUNS} |
+          STATUS_CHECKS_SUCCEEDED=$(
+            echo ${STATUS_CHECKS} |
             jq '[.[] | select( .conclusion == "success" )] | length'
           )
-          echo "::info ::This pull request has ${CHECK_RUNS_SUCCEEDED} successful checks"
+          echo "This pull request has ${STATUS_CHECKS_SUCCEEDED} successful checks"
 
-          CHECK_RUNS_INCOMPLETE=$(
-            echo ${CHECK_RUNS} |
+          STATUS_CHECKS_INCOMPLETE=$(
+            echo ${STATUS_CHECKS} |
             jq '[.[] | select( .status != "completed" )] | length'
           )
-          echo "::info ::This pull request has ${CHECK_RUNS_INCOMPLETE} incomplete checks"
+          echo "This pull request has ${STATUS_CHECKS_INCOMPLETE} incomplete checks"
 
-          CHECK_RUNS_FAILED=$(
-            echo ${CHECK_RUNS} |
+          STATUS_CHECKS_FAILED=$(
+            echo ${STATUS_CHECKS} |
             jq '[.[] | select( .conclusion == "failure" )] | length'
           )
-          echo "::info ::This pull request has ${CHECK_RUNS_INCOMPLETE} failed checks"
+          echo "This pull request has ${STATUS_CHECKS_FAILED} failed checks"
 
-          if [ ${CHECK_RUNS_INCOMPLETE} -gt 0 ] || [ ${CHECK_RUNS_FAILED} -gt 0 ]; then
+          if [ ${STATUS_CHECKS_INCOMPLETE} -gt 0 ] || [ ${STATUS_CHECKS_FAILED} -gt 0 ]; then
             echo "::error ::Failed to meet check status conditions"
             exit 1
           fi
