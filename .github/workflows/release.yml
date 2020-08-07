@@ -2,22 +2,12 @@ name: Release
 
 on:
   create:
-  check_run:
-    types:
-      - completed
   pull_request_review:
     types:
       - submitted
 
 jobs:
-  always-runs:
-    runs-on: ubuntu-latest
-    steps:
-      - name: Output github
-        run: |
-          echo $(jq '.' $GITHUB_EVENT_PATH)
-
-  create:
+  create-pull-request:
     if: startsWith(github.ref, 'refs/heads/release/')
     runs-on: ubuntu-latest
     steps:
@@ -39,17 +29,13 @@ jobs:
       - name: Create pull request to master
         run: echo "Open PR to master"
 
-  merge:
+  verify-merge-conditions:
     if: startsWith(github.event.pull_request.head.ref, 'release/') &&
       !github.event.pull_request.closed_at &&
       !github.event.pull_request.merged
     runs-on: ubuntu-latest
     steps:
-
-# github.event.pull_request exists on pull_request_review
-# github.event.check_suite exists on check_suite completed
-
-      - name: Check if pull request is mergeable
+      - name: Verify reviews
         run: |
           PR_REVIEWS=$(
             curl -s \
@@ -75,6 +61,8 @@ jobs:
             exit 1
           fi
 
+      - name: Verify required status checks
+        run: |
           REQUIRED_STATUS_CHECKS=$(
             curl -s \
               -H "Authorization: token ${{ secrets.CUSTOM_GITHUB_TOKEN }}" \
@@ -114,6 +102,10 @@ jobs:
             exit 1
           fi
 
+  merge-pull-request:
+    needs: verify-merge-conditions
+    runs-on: ubuntu-latest
+    steps:
       - name: Merge into master
         run: echo "Merge into master"
 
