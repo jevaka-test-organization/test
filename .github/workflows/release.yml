@@ -3,6 +3,8 @@ name: Release
 on:
   create:
   pull_request_review:
+    branches:
+      - master
     types:
       - submitted
 
