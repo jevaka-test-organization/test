@@ -1,4 +1,4 @@
-name: GitHub Release Manager
+name: Release Manager
 
 on:
   create:
@@ -9,11 +9,32 @@ on:
       - submitted
 
 jobs:
-  manage-release:
-    if: startsWith(github.ref, 'refs/heads/release/') ||
-      ( startsWith(github.event.pull_request.head.ref, 'release/') &&
+  create-release:
+    if: startsWith(github.ref, 'refs/heads/release/')
+    runs-on: ubuntu-latest
+    steps:
+      # workaround to use a GitHub action from a private repo
+      # https://github.community/t/github-action-action-in-private-repository/16063
+      - name: Checkout GitHub action from private repo
+        uses: actions/checkout@v2
+        with:
+          repository: sans-security-awareness/github-release-manager
+          ref: develop
+          token: ${{ secrets.CUSTOM_GITHUB_TOKEN }}
+          path: .github/actions/github-release-manager
+
+      - uses: ./.github/actions/github-release-manager
+        with:
+          github_token: ${{ secrets.CUSTOM_GITHUB_TOKEN }}
+          production_branch: master
+          integration_branch: develop
+
+  complete-release:
+    if: (
+        startsWith(github.event.pull_request.head.ref, 'release/') &&
         !github.event.pull_request.closed_at &&
-        !github.event.pull_request.merged )
+        !github.event.pull_request.merged
+      )
     runs-on: ubuntu-latest
     steps:
       # workaround to use a GitHub action from a private repo
