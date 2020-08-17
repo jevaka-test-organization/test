@@ -1,7 +1,10 @@
 name: Test Status Check
 
 on:
-  push:
+  pull_request:
+    branches:
+      - develop
+      - master
 
 jobs:
   ci:
