@@ -13,6 +13,8 @@ jobs:
     if: startsWith(github.ref, 'refs/heads/release/')
     runs-on: ubuntu-latest
     steps:
+      - uses: actions/checkout@v2
+
       # workaround to use a GitHub action from a private repo
       # https://github.community/t/github-action-action-in-private-repository/16063
       - name: Checkout GitHub action from private repo
