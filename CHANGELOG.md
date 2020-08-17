@@ -1,4 +1,4 @@
-## 0.3.0-alpha / YYYY-MM-DD
+## 0.9.0 / 2020-08-17
 
 ### Added
 
@@ -6,14 +6,10 @@
 * Some other thing was added
 * More things were added
 
-### Changed
-
 ### Fixed
 
 * Some thing was fixed
 * Some other thing was fixed
-
-### Removed
 
 
 ## 0.2.0 / 2020-08-01
@@ -35,8 +31,3 @@
 ### Added
 
 * Initial release
-
-### Removed
-
-### Fixed
-
