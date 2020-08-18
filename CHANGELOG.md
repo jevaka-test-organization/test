@@ -4,9 +4,6 @@
 
 * Some thing was added
 
-### Fixed
-
-
 
 ## 0.9.0 / 2020-08-17
 
