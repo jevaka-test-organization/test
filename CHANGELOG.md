@@ -1,3 +1,10 @@
+## 1.1.0 / 2020-08-19
+
+### Changed
+
+* Some thing was changed
+
+
 ## 1.0.0 / 2020-08-19
 
 ### Added
