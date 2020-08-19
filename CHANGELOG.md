@@ -1,12 +1,8 @@
-## 0.13.0-alpha / YYYY-MM-DD
+## 1.0.0 / 2020-08-19
 
 ### Added
 
 * Some thing was added
-
-### Changed
-
-### Fixed
 
 ### Removed
 
