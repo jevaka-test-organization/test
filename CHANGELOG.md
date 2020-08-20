@@ -1,3 +1,16 @@
+## 1.7.0-alpha / YYYY-MM-DD
+
+### Added
+
+### Changed
+
+* Some thing was changed
+
+### Fixed
+
+### Removed
+
+
 ## 1.6.0 / 2020-08-19
 
 ### Changed
