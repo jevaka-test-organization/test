@@ -1,12 +1,4 @@
-## 1.12.0-alpha / YYYY-MM-DD
-
-### Added
-
-### Changed
-
-### Fixed
-
-### Removed
+## 2.0.0 / 2020-08-20
 
 
 ## 1.11.0 / 2020-08-20
