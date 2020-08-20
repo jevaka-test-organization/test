@@ -1,3 +1,18 @@
+## 2.1.0 / 2020-08-20
+
+### Added
+
+* Some thing was added
+
+### Fixed
+
+* Some thing was Fixed
+
+### Removed
+
+* Some thing was Removed
+
+
 ## 2.0.0 / 2020-08-20
 
 
