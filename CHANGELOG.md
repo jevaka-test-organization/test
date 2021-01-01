@@ -1,14 +1,8 @@
-## 2.4.0-alpha / YYYY-MM-DD
-
-### Added
+## 2.5.0 / 2021-01-01
 
 ### Changed
 
 * Testing new release manager
-
-### Fixed
-
-### Removed
 
 
 ## 2.3.0 / 2020-08-21
