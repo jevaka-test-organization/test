@@ -4,6 +4,8 @@
 
 ### Changed
 
+* testing release 2.7.0
+
 ### Fixed
 
 ### Removed
