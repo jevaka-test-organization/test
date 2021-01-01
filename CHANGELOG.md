@@ -1,3 +1,10 @@
+## 2.5.0 / 2021-01-01
+
+### Changed
+
+* Testing new release manager
+
+
 ## 2.3.0 / 2020-08-21
 
 

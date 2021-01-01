@@ -24,7 +24,7 @@ jobs:
         uses: actions/checkout@v2
         with:
           repository: sans-security-awareness/github-release-manager
-          ref: feature/VOL-121_automate-release-process
+          ref: feature/VOL-137_create-release
           token: ${{ secrets.CUSTOM_GITHUB_TOKEN }}
           path: .github/actions/github-release-manager
 
