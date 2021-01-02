@@ -1,3 +1,14 @@
+## 2.8.0-alpha / YYYY-MM-DD
+
+### Added
+
+### Changed
+
+### Fixed
+
+### Removed
+
+
 ## 2.7.0 / 2021-01-02
 
 ### Changed
