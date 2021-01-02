@@ -1,14 +1,8 @@
-## 2.7.0-alpha / YYYY-MM-DD
-
-### Added
+## 2.7.0 / 2021-01-02
 
 ### Changed
 
 * testing release 2.7.0
-
-### Fixed
-
-### Removed
 
 
 ## 2.6.0 / 2021-01-01
