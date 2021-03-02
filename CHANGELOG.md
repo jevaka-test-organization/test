@@ -1,14 +1,8 @@
-## 2.9.0-alpha / YYYY-MM-DD
-
-### Added
+## 2.9.0 / 2021-03-02
 
 ### Changed
 
 * testing release manager
-
-### Fixed
-
-### Removed
 
 
 ## 2.8.0 / 2021-03-02
