@@ -1,3 +1,10 @@
+## 2.8.0 / 2021-03-02
+
+### Changed
+
+* testing new release manager
+
+
 ## 2.7.0 / 2021-01-02
 
 ### Changed
