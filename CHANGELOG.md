@@ -4,6 +4,8 @@
 
 ### Changed
 
+* testing new release manager
+
 ### Fixed
 
 ### Removed
