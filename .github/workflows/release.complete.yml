@@ -23,8 +23,8 @@ jobs:
       - name: Checkout GitHub action from private repo
         uses: actions/checkout@v2
         with:
-          repository: sans-security-awareness/github-release-manager
-          ref: feature/VOL-367_allow-graceful-resume-after-failure
+          repository: sans-cpe/github-release-manager
+          ref: feature/DOTS-89-prepend-release-tags-with-v
           token: ${{ secrets.CUSTOM_GITHUB_TOKEN }}
           path: .github/actions/github-release-manager
 
