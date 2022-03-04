@@ -1,14 +1,8 @@
-## 3.2.0-alpha / YYYY-MM-DD
-
-### Added
-
-### Changed
+## 3.1.7 / 2022-03-04
 
 ### Fixed
 
 * Fixed alpha stubs
-
-### Removed
 
 
 ## 3.1.5 / 2022-03-04
