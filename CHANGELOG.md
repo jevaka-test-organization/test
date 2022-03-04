@@ -1,4 +1,4 @@
-## 2.11.0-alpha / YYYY-MM-DD
+## 3.1.5 / 2022-03-04
 
 ### Added
 
@@ -7,10 +7,6 @@
 ### Changed
 
 * Updated with test version files
-
-### Fixed
-
-### Removed
 
 
 ## 2.10.0 / 2022-03-03
