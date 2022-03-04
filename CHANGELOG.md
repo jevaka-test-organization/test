@@ -1,12 +1,4 @@
-## 3.2.0-alpha / YYYY-MM-DD
-
-### Added
-
-### Changed
-
-### Fixed
-
-### Removed
+## 3.1.9 / 2022-03-04
 
 
 ## 3.1.8 / 2022-03-04
