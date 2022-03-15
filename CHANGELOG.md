@@ -1,3 +1,10 @@
+## 3.2.0 / 2022-03-15
+
+### Changed
+
+* Testing new release manager
+
+
 ## 3.1.9 / 2022-03-04
 
 
