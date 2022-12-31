@@ -1,14 +1,8 @@
-## 3.3.0-alpha / YYYY-MM-DD
-
-### Added
+## 3.3.0 / 2022-12-31
 
 ### Changed
 
 * Testing new release manager
-
-### Fixed
-
-### Removed
 
 
 ## 3.2.0 / 2022-03-15
