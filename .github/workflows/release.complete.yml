@@ -16,21 +16,21 @@ jobs:
       )
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v2
+      - uses: actions/checkout@v3
 
       # workaround to use a GitHub action from a private repo
       # https://github.community/t/github-action-action-in-private-repository/16063
       - name: Checkout GitHub action from private repo
-        uses: actions/checkout@v2
+        uses: actions/checkout@v3
         with:
           repository: sans-cpe/github-release-manager
-          ref: feature/DOTS-131_add-python-setup-cfg-version-file
+          ref: feature/DOTS-343_display-friendly-error-non-existent-production-branch
           token: ${{ secrets.CUSTOM_GITHUB_TOKEN }}
           path: .github/actions/github-release-manager
 
       - uses: ./.github/actions/github-release-manager
         with:
-          github_token: ${{ secrets.CUSTOM_GITHUB_TOKEN }}
+          github_token: ${{ secrets.REPO_FULL_SCOPE_TOKEN }}
           github_review_token: ${{ secrets.GITHUB_TOKEN }}
           production_branch: master
           integration_branch: develop
