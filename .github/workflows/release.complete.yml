@@ -1,4 +1,4 @@
-name: Release Manager
+name: Release Manager Complete
 
 on:
   pull_request_review:
@@ -10,27 +10,27 @@ on:
 jobs:
   complete:
     if: (
-        startsWith(github.event.pull_request.head.ref, 'release/') &&
-        !github.event.pull_request.closed_at &&
-        !github.event.pull_request.merged
+      startsWith(github.event.pull_request.head.ref, 'release/') &&
+      !github.event.pull_request.closed_at &&
+      !github.event.pull_request.merged
       )
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v3
+      - name: Checkout source
+        uses: actions/checkout@v3
 
-      # workaround to use a GitHub action from a private repo
-      # https://github.community/t/github-action-action-in-private-repository/16063
-      - name: Checkout GitHub action from private repo
+      - name: Checkout GitHub Action from private repo
         uses: actions/checkout@v3
         with:
           repository: sans-cpe/github-release-manager
-          ref: feature/DOTS-343_display-friendly-error-non-existent-production-branch
-          token: ${{ secrets.CUSTOM_GITHUB_TOKEN }}
+          ref: feature/DOTS-255_add-merge-freeze-during-release
+          token: ${{ secrets.REPO_FULL_SCOPE_TOKEN }}
           path: .github/actions/github-release-manager
 
-      - uses: ./.github/actions/github-release-manager
+      - name: Complete release
+        uses: ./.github/actions/github-release-manager
         with:
-          github_token: ${{ secrets.CUSTOM_GITHUB_TOKEN }}
+          github_token: ${{ secrets.REPO_FULL_SCOPE_TOKEN }}
           github_review_token: ${{ secrets.GITHUB_TOKEN }}
           production_branch: master
           integration_branch: develop
