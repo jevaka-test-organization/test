@@ -1,14 +1,8 @@
-## 3.9.0-alpha / YYYY-MM-DD
-
-### Added
+## 3.9.0 / 2023-06-23
 
 ### Changed
 
 * Testing delete
-
-### Fixed
-
-### Removed
 
 
 ## 3.8.0 / 2023-06-23
