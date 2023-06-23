@@ -1,11 +1,11 @@
-name: Release Manager Create
+name: Release Manager Cleanup
 
 on:
-  create:
+  delete:
 
 jobs:
-  create:
-    if: startsWith(github.ref, 'refs/heads/release/')
+  cleanup:
+    if: startsWith(github.event.delete.ref, 'heads/release/')
     runs-on: ubuntu-latest
     steps:
       - name: Checkout source
