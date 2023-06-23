@@ -1,12 +1,8 @@
-## 3.10.0-alpha / YYYY-MM-DD
-
-### Added
+## 3.10.0 / 2023-06-23
 
 ### Changed
 
-### Fixed
-
-### Removed
+* Testing delete
 
 
 ## 3.9.0 / 2023-06-23
