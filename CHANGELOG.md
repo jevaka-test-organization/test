@@ -1,14 +1,8 @@
-## 3.6.0-alpha / YYYY-MM-DD
-
-### Added
+## 3.6.0 / 2023-06-23
 
 ### Changed
 
 * Testing release on locked develop
-
-### Fixed
-
-### Removed
 
 
 ## 3.5.0 / 2023-06-23
