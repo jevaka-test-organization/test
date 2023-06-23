@@ -1,14 +1,8 @@
-## 3.5.0-alpha / YYYY-MM-DD
-
-### Added
+## 3.5.0 / 2023-06-23
 
 ### Changed
 
 * Testing diverged develop
-
-### Fixed
-
-### Removed
 
 
 ## 3.4.0 / 2023-06-22
