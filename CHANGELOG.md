@@ -1,3 +1,10 @@
+## 3.6.0 / 2023-06-23
+
+### Changed
+
+* Testing release on locked develop
+
+
 ## 3.5.0 / 2023-06-23
 
 ### Changed
