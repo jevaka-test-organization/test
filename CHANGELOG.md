@@ -1,14 +1,8 @@
-## 3.7.0-alpha / YYYY-MM-DD
-
-### Added
+## 3.7.0 / 2023-06-23
 
 ### Changed
 
 * Testing improvements
-
-### Fixed
-
-### Removed
 
 
 ## 3.6.0 / 2023-06-23
