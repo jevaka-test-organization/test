@@ -2,6 +2,7 @@ name: Release Manager Create
 
 on:
   create:
+  delete:
 
 jobs:
   create:
