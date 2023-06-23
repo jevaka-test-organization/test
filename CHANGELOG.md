@@ -4,6 +4,8 @@
 
 ### Changed
 
+* Testing improvements
+
 ### Fixed
 
 ### Removed
