@@ -4,6 +4,8 @@
 
 ### Changed
 
+* Testing release on locked develop
+
 ### Fixed
 
 ### Removed
