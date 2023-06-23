@@ -1,3 +1,10 @@
+## 3.7.0 / 2023-06-23
+
+### Changed
+
+* Testing improvements
+
+
 ## 3.6.0 / 2023-06-23
 
 ### Changed
