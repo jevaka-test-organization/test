@@ -2,6 +2,7 @@ name: Release Manager Create
 
 on:
   create:
+  delete:
 
 jobs:
   create:
@@ -25,3 +26,4 @@ jobs:
           github_token: ${{ secrets.REPO_FULL_SCOPE_TOKEN }}
           production_branch: master
           integration_branch: develop
+          freeze_integration_branch: true
