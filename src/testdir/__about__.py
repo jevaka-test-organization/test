@@ -10,6 +10,6 @@ __all__ = [
 ]
 
 __title__ = 'test'
-__version__ = '3.18.0'
+__version__ = '3.19.0-alpha'
 __license__ = 'Copyright (c) 2022 Jevaka.org'
 __copyright__ = 'Copyright (c) 2022 Jevaka.org'
