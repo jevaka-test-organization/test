@@ -19,10 +19,9 @@ jobs:
           token: ${{ secrets.REPO_FULL_SCOPE_TOKEN }}
           path: .github/actions/github-release-manager
 
-      - name: Create release
+      - name: Cleanup release
         uses: ./.github/actions/github-release-manager
         with:
           github_token: ${{ secrets.REPO_FULL_SCOPE_TOKEN }}
           production_branch: master
           integration_branch: develop
-          freeze_integration_branch: true
