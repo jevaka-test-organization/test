@@ -5,7 +5,7 @@ on:
 
 jobs:
   cleanup:
-    if: startsWith(github.event.delete.ref, 'refs/heads/release/')
+    if: startsWith(github.event.ref, 'release/')
     runs-on: ubuntu-latest
     steps:
       - name: Checkout source
