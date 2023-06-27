@@ -1,6 +1,6 @@
 {
   "name": "test-package",
-  "version": "3.20.0",
+  "version": "3.21.0-alpha",
   "description": "A simple package for testing",
   "license": "ISC",
   "repository": {
