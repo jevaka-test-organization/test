@@ -3,6 +3,7 @@
 ### Added
 
 * Testing delete on merge
+* Testing delete on merge
 
 ### Changed
 
