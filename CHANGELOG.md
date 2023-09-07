@@ -2,6 +2,8 @@
 
 ### Added
 
+* Testing delete on merge
+
 ### Changed
 
 ### Fixed
