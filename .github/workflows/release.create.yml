@@ -15,7 +15,7 @@ jobs:
         uses: actions/checkout@v3
         with:
           repository: sans-cpe/github-release-manager
-          ref: feature/DOTS-255_add-merge-freeze-during-release
+          ref: feature/DOTS-402_display-errors-during-create-stage
           token: ${{ secrets.REPO_FULL_SCOPE_TOKEN }}
           path: .github/actions/github-release-manager
 

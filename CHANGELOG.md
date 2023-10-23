@@ -5,6 +5,7 @@
 * Testing delete on merge
 * Testing delete on merge
 * Testing delete on merge
+* Testing new release manager
 
 ### Changed
 
