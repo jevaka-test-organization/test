@@ -1,4 +1,4 @@
-## 3.21.0-alpha / YYYY-MM-DD
+## 3.21.0 / 2023-10-24
 
 ### Added
 
@@ -6,12 +6,6 @@
 * Testing delete on merge
 * Testing delete on merge
 * Testing new release manager
-
-### Changed
-
-### Fixed
-
-### Removed
 
 
 ## 3.20.0 / 2023-06-27
