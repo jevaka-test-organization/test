@@ -1,12 +1,4 @@
-## 3.24.0-alpha / YYYY-MM-DD
-
-### Added
-
-### Changed
-
-### Fixed
-
-### Removed
+## 3.24.0 / 2023-10-30
 
 
 ## 3.23.0 / 2023-10-30
