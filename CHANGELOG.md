@@ -1,3 +1,10 @@
+## 3.22.0 / 2023-10-30
+
+### Changed
+
+* Testing new release manager
+
+
 ## 3.21.0 / 2023-10-27
 
 ### Added
