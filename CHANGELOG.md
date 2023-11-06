@@ -1,12 +1,8 @@
-## 3.26.0-alpha / YYYY-MM-DD
-
-### Added
+## 3.27.0 / 2023-11-06
 
 ### Changed
 
-### Fixed
-
-### Removed
+* Some change
 
 
 ## 3.25.0 / 2023-11-02
