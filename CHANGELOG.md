@@ -1,14 +1,8 @@
-## 3.28.0-alpha / YYYY-MM-DD
+## 3.28.0 / 2023-11-07
 
 ### Added
 
 * Test release
-
-### Changed
-
-### Fixed
-
-### Removed
 
 
 ## 3.27.0 / 2023-11-06
