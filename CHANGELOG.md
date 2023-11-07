@@ -2,6 +2,8 @@
 
 ### Added
 
+* Test release
+
 ### Changed
 
 ### Fixed
