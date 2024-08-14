@@ -6,6 +6,7 @@
 
 * Some change
 * Some other change
+* Some other change that belongs in the next release - need to stub alpha first if rebase is enabled
 
 ### Fixed
 
