@@ -5,6 +5,7 @@
 ### Changed
 
 * Some change
+* Some other change
 
 ### Fixed
 
