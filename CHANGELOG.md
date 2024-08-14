@@ -5,7 +5,7 @@
 ### Changed
 
 * Some change
-* Some other change that belongs in the next release
+* Some other change
 
 ### Fixed
 
