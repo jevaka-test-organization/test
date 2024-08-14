@@ -9,13 +9,13 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: Checkout source
-        uses: actions/checkout@v3
+        uses: actions/checkout@v4
 
       - name: Checkout GitHub Action from private repo
-        uses: actions/checkout@v3
+        uses: actions/checkout@v4
         with:
           repository: sans-cpe/github-release-manager
-          ref: release/1.7.0
+          ref: feature/DOTS-517_allow-rebase-merge
           token: ${{ secrets.REPO_FULL_SCOPE_TOKEN }}
           path: .github/actions/github-release-manager
 
