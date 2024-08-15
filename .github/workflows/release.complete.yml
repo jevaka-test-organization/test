@@ -34,3 +34,4 @@ jobs:
           github_review_token: ${{ secrets.GITHUB_TOKEN }}
           production_branch: master
           integration_branch: develop
+          allow_integration_rebase_merge: true
