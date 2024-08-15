@@ -1,14 +1,8 @@
-## 3.30.0-alpha / YYYY-MM-DD
-
-### Added
+## 3.30.0 / 2024-08-15
 
 ### Changed
 
 * Some change for v3.30.0
-
-### Fixed
-
-### Removed
 
 
 ## 3.29.0 / 2024-08-14
