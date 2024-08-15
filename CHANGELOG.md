@@ -1,16 +1,10 @@
-## 3.29.0-alpha / YYYY-MM-DD
-
-### Added
+## 3.29.0 / 2024-08-14
 
 ### Changed
 
 * Some change
 * Some other change
 * Some other change that belongs in the next release - need to stub alpha first if rebase is enabled
-
-### Fixed
-
-### Removed
 
 
 ## 3.28.0 / 2024-08-14
