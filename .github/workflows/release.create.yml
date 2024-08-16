@@ -23,6 +23,7 @@ jobs:
         uses: ./.github/actions/github-release-manager
         with:
           github_token: ${{ secrets.REPO_FULL_SCOPE_TOKEN }}
+          github_review_token: ${{ secrets.GITHUB_TOKEN }}
           production_branch: master
           integration_branch: develop
           allow_integration_rebase_merge: true
