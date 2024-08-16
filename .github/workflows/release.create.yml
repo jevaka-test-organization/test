@@ -24,6 +24,7 @@ jobs:
         with:
           github_token: ${{ secrets.REPO_FULL_SCOPE_TOKEN }}
           production_branch: master
-          freeze_integration_branch: false
           integration_branch: develop
+          allow_integration_rebase_merge: true
+          freeze_integration_branch: false
           tag_major: true
